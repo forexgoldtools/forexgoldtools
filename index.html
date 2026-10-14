@@ -2,223 +2,689 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b1120">
-  <meta name="description" content="Forex Gold Tools — trading calculators, risk management and trading journal.">
-  <title>Forex Gold Tools | Smart Trading Toolkit</title>
-  <style>
-    :root {
-      --bg: #080e1b;
-      --panel: #111a2b;
-      --gold: #e8bd63;
-      --text: #f5f7fb;
-      --muted: #9ca9bd;
-      --border: #26344a;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-    }
-    header {
-      border-bottom: 1px solid var(--border);
-      background: #0b1221;
-    }
-    .nav {
-      max-width: 1150px;
-      margin: auto;
-      padding: 18px 22px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-    .brand { font-size: 21px; font-weight: 800; }
-    .brand span { color: var(--gold); }
-    .nav a {
-      color: var(--muted);
-      text-decoration: none;
-      margin-left: 18px;
-      font-size: 14px;
-    }
-    .hero {
-      max-width: 1150px;
-      margin: auto;
-      padding: 76px 22px 56px;
-      text-align: center;
-    }
-    .tag {
-      display: inline-block;
-      color: var(--gold);
-      border: 1px solid #66512c;
-      background: #241e14;
-      padding: 6px 13px;
-      border-radius: 30px;
-      font-size: 12px;
-      letter-spacing: 1px;
-    }
-    h1 {
-      font-size: clamp(36px, 6vw, 64px);
-      line-height: 1.12;
-      margin: 22px 0 16px;
-    }
-    h1 span { color: var(--gold); }
-    .hero p {
-      max-width: 660px;
-      margin: auto;
-      color: var(--muted);
-      font-size: 17px;
-    }
-    .actions {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 28px;
-    }
-    .btn {
-      display: inline-block;
-      border-radius: 9px;
-      padding: 12px 19px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 14px;
-    }
-    .primary { background: var(--gold); color: #15120b; }
-    .secondary { border: 1px solid var(--border); color: var(--text); }
-    .section {
-      max-width: 1150px;
-      margin: auto;
-      padding: 30px 22px 65px;
-    }
-    .section-title { text-align: center; margin-bottom: 28px; }
-    .section-title h2 { font-size: 30px; margin-bottom: 5px; }
-    .section-title p { color: var(--muted); margin-top: 0; }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 17px;
-    }
-    .card {
-      padding: 23px;
-      border: 1px solid var(--border);
-      background: var(--panel);
-      border-radius: 15px;
-      transition: transform .2s, border-color .2s;
-    }
-    .card:hover { transform: translateY(-3px); border-color: #927641; }
-    .icon { font-size: 27px; }
-    .card h3 { margin: 12px 0 7px; }
-    .card p { color: var(--muted); font-size: 14px; margin-bottom: 0; }
-    .status {
-      max-width: 1106px;
-      margin: 0 auto 50px;
-      padding: 18px 22px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      color: var(--muted);
-      background: #0d1524;
-    }
-    .status strong { color: var(--gold); }
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 25px 20px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-    }
-    @media (max-width: 760px) {
-      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .nav { padding: 15px; }
-      .nav a { margin-left: 9px; font-size: 12px; }
-      .hero { padding-top: 55px; }
-      .status { margin-left: 15px; margin-right: 15px; }
-    }
-    @media (max-width: 480px) {
-      .grid { grid-template-columns: 1fr; }
-      .brand { font-size: 18px; }
-      .nav a { margin-left: 7px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080e1b">
+<meta name="description" content="Forex Gold Tools — trading calculators, risk management and trading journal for Forex, Gold, Silver and Oil.">
+<title>Forex Gold Tools | Smart Trading Platform</title>
+
+<style>
+:root {
+  --bg:#080e1b;
+  --panel:#101a2c;
+  --panel2:#131f33;
+  --gold:#e8bd63;
+  --white:#f5f7fc;
+  --muted:#9aa9c0;
+  --line:#25334a;
+  --green:#53d6a0;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0;
+  font-family:Inter,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--white);
+  line-height:1.6;
+}
+a { color:inherit; text-decoration:none; }
+button,a { -webkit-tap-highlight-color:transparent; }
+.container { width:min(1160px,calc(100% - 40px)); margin:auto; }
+
+header {
+  position:sticky;
+  top:0;
+  z-index:10;
+  background:rgba(8,14,27,.94);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.nav {
+  min-height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:22px;
+}
+.brand {
+  display:flex;
+  align-items:center;
+  gap:11px;
+  font-size:17px;
+  font-weight:800;
+  letter-spacing:.5px;
+}
+.brand-icon {
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  background:var(--gold);
+  color:#111827;
+  border-radius:12px;
+  font-size:23px;
+}
+.brand span { color:var(--gold); }
+.nav-links { display:flex; align-items:center; gap:25px; }
+.nav-links a { color:var(--muted); font-size:13px; }
+.nav-links a:hover { color:var(--gold); }
+.btn {
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  padding:12px 18px;
+  border-radius:9px;
+  font-weight:700;
+  font-size:13px;
+  border:1px solid transparent;
+  cursor:pointer;
+}
+.btn-gold { background:var(--gold); color:#111827; }
+.btn-gold:hover { background:#f4d38d; }
+.btn-outline { border-color:var(--line); color:var(--white); }
+.btn-outline:hover { border-color:var(--gold); }
+.menu-btn {
+  display:none;
+  color:var(--white);
+  background:transparent;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:8px 12px;
+  font-size:20px;
+}
+
+.hero {
+  padding:76px 0 55px;
+  position:relative;
+  overflow:hidden;
+}
+.hero:before {
+  content:"";
+  position:absolute;
+  width:500px;
+  height:400px;
+  right:-180px;
+  top:-120px;
+  background:radial-gradient(ellipse,rgba(232,189,99,.12),transparent 68%);
+  pointer-events:none;
+}
+.hero-grid {
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  align-items:center;
+  gap:50px;
+}
+.eyebrow {
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  color:var(--gold);
+  border:1px solid #59482b;
+  background:#19180f;
+  border-radius:30px;
+  padding:7px 12px;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.4px;
+}
+.dot {
+  width:7px;
+  height:7px;
+  background:var(--green);
+  border-radius:50%;
+  box-shadow:0 0 10px #53d6a066;
+}
+h1 {
+  font-size:clamp(40px,5.2vw,66px);
+  letter-spacing:-2.5px;
+  line-height:1.08;
+  margin:22px 0;
+}
+.gold-text {
+  color:var(--gold);
+  display:block;
+}
+.hero-copy {
+  max-width:540px;
+  font-size:16px;
+  color:var(--muted);
+}
+.hero-actions {
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:28px;
+}
+.trust {
+  display:flex;
+  flex-wrap:wrap;
+  gap:20px;
+  margin-top:30px;
+  color:var(--muted);
+  font-size:11px;
+}
+.trust span:before {
+  content:"✓";
+  color:var(--green);
+  margin-right:7px;
+  font-weight:bold;
+}
+.market-panel {
+  padding:23px;
+  border:1px solid #293750;
+  border-radius:20px;
+  background:linear-gradient(145deg,#142039,#0d1525);
+  box-shadow:0 24px 80px #00000030;
+}
+.panel-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:20px;
+}
+.panel-title { font-weight:750; font-size:15px; }
+.panel-sub { color:var(--muted); font-size:11px; }
+.demo-badge {
+  font-size:10px;
+  color:var(--gold);
+  border:1px solid #59482b;
+  padding:4px 8px;
+  border-radius:6px;
+}
+.market-list { display:grid; gap:10px; }
+.market-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:13px;
+  background:#0c1525;
+  border:1px solid #202e44;
+  border-radius:11px;
+}
+.asset { display:flex; align-items:center; gap:11px; }
+.asset-icon {
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  background:#1d2a40;
+  font-size:18px;
+}
+.asset-name { font-size:13px; font-weight:750; }
+.asset-sub { color:var(--muted); font-size:10px; }
+.market-value { text-align:right; font-size:13px; font-weight:750; }
+.market-value small {
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:400;
+}
+.panel-note {
+  color:var(--muted);
+  font-size:10px;
+  margin-top:16px;
+}
+
+.section { padding:62px 0; }
+.section-head {
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:20px;
+  margin-bottom:27px;
+}
+.kicker {
+  color:var(--gold);
+  text-transform:uppercase;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.8px;
+}
+h2 {
+  font-size:clamp(27px,3vw,36px);
+  letter-spacing:-1px;
+  line-height:1.2;
+  margin:8px 0;
+}
+.section-desc { color:var(--muted); font-size:13px; margin:0; }
+.tool-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:17px;
+}
+.tool-card {
+  background:linear-gradient(145deg,#121d30,#0e1727);
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:23px;
+  transition:transform .2s,border-color .2s;
+}
+.tool-card:hover {
+  transform:translateY(-4px);
+  border-color:#9a7940;
+}
+.tool-icon {
+  width:47px;
+  height:47px;
+  display:grid;
+  place-items:center;
+  background:#252719;
+  border:1px solid #51442b;
+  border-radius:12px;
+  color:var(--gold);
+  font-size:23px;
+}
+.tool-card h3 { font-size:16px; margin:17px 0 7px; }
+.tool-card p { color:var(--muted); font-size:12px; margin:0 0 18px; }
+.card-link { color:var(--gold); font-size:12px; font-weight:750; }
+.card-link span { margin-left:5px; }
+.pill {
+  display:inline-block;
+  margin-top:12px;
+  color:var(--muted);
+  font-size:9px;
+  border:1px solid var(--line);
+  border-radius:5px;
+  padding:3px 7px;
+}
+
+.journal-wrap {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:28px;
+  align-items:center;
+  padding:35px;
+  border:1px solid #3b3527;
+  border-radius:20px;
+  background:radial-gradient(ellipse at top right,#292313 0%,#131a29 55%);
+}
+.journal-wrap p { color:var(--muted); font-size:13px; }
+.journal-list {
+  display:grid;
+  gap:12px;
+  margin:22px 0;
+}
+.journal-list div { color:#dce4f1; font-size:12px; }
+.journal-list span { color:var(--green); margin-right:10px; }
+.journal-preview {
+  background:#0b1322;
+  border:1px solid #29364a;
+  padding:22px;
+  border-radius:15px;
+}
+.preview-head {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:20px;
+}
+.preview-tag { color:var(--green); font-size:10px; }
+.stats {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.stat {
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:15px;
+}
+.stat-label { color:var(--muted); font-size:10px; }
+.stat-value { font-size:20px; font-weight:800; margin-top:4px; }
+.stat-note { color:var(--muted); font-size:9px; }
+
+.feature-strip {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:26px;
+}
+.feature {
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#0d1626;
+}
+.feature strong { display:block; font-size:13px; margin-bottom:5px; }
+.feature p { color:var(--muted); font-size:11px; margin:0; }
+
+.cta {
+  text-align:center;
+  padding:50px 25px;
+  border:1px solid #3b3527;
+  border-radius:18px;
+  background:linear-gradient(120deg,#191a17,#10192a);
+}
+.cta p { color:var(--muted); font-size:13px; margin:12px auto 22px; max-width:550px; }
+
+footer { border-top:1px solid var(--line); padding:27px 0; }
+.footer-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+}
+footer p { color:var(--muted); font-size:10px; margin:5px 0; }
+.footer-links { display:flex; gap:18px; color:var(--muted); font-size:11px; }
+
+@media(max-width:850px) {
+  .hero-grid { grid-template-columns:1fr; gap:35px; }
+  .hero { padding-top:55px; }
+  .market-panel { max-width:560px; width:100%; }
+  .tool-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .journal-wrap { grid-template-columns:1fr; }
+}
+@media(max-width:600px) {
+  .container { width:calc(100% - 28px); }
+  .nav { min-height:66px; }
+  .brand { font-size:13px; }
+  .brand-icon { width:36px; height:36px; }
+  .menu-btn { display:block; }
+  .nav-links {
+    display:none;
+    position:absolute;
+    top:66px;
+    left:0;
+    right:0;
+    padding:18px;
+    background:#0b1221;
+    border-bottom:1px solid var(--line);
+    flex-direction:column;
+    align-items:stretch;
+    gap:17px;
+  }
+  .nav-links.open { display:flex; }
+  .nav-links a { margin:0; }
+  .nav-links .btn { text-align:center; }
+  h1 { letter-spacing:-1.5px; }
+  .hero { padding:43px 0 32px; }
+  .hero-copy { font-size:14px; }
+  .trust { gap:10px 15px; }
+  .section { padding:43px 0; }
+  .section-head { align-items:start; flex-direction:column; }
+  .tool-grid { grid-template-columns:1fr; }
+  .journal-wrap { padding:20px; }
+  .feature-strip { grid-template-columns:1fr; }
+  .footer-row { align-items:start; flex-direction:column; }
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <nav class="nav">
-      <div class="brand">FOREX <span>GOLD</span> TOOLS</div>
-      <div>
-        <a href="#tools">Tools</a>
-        <a href="#journal">Journal</a>
-      </div>
+<header>
+  <div class="container nav">
+    <a class="brand" href="#home">
+      <span class="brand-icon">↗</span>
+      <span>FOREX <span>GOLD</span> TOOLS</span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#tools">Trading Tools</a>
+      <a href="#journal">Journal</a>
+      <a href="#features">Features</a>
+      <a class="btn btn-gold" href="#tools">Explore Platform ↗</a>
     </nav>
-  </header>
+  </div>
+</header>
 
-  <main>
-    <section class="hero">
-      <span class="tag">YOUR TRADING TOOLKIT</span>
-      <h1>Trade Smarter.<br><span>Manage Risk Better.</span></h1>
-      <p>
-        Essential trading calculators, risk management tools and a personal
-        trading journal — designed for Forex, Gold, Silver and Oil traders.
+<main>
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> YOUR TRADING TOOLKIT</div>
+      <h1>Trade Smarter.<span class="gold-text">Risk Better.</span></h1>
+      <p class="hero-copy">
+        Plan every trade with purpose. Calculate position size, manage risk
+        and build better trading habits with one streamlined toolkit for
+        Forex, Gold, Silver and Oil.
       </p>
-      <div class="actions">
-        <a class="btn primary" href="#tools">Explore Trading Tools ↗</a>
-        <a class="btn secondary" href="#journal">Trading Journal</a>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="#tools">Explore Trading Tools ↗</a>
+        <a class="btn btn-outline" href="#journal">Discover Trading Journal</a>
       </div>
-    </section>
-
-    <section class="section" id="tools">
-      <div class="section-title">
-        <h2>Trading Toolkit</h2>
-        <p>Everything you need to plan a trade more carefully.</p>
+      <div class="trust">
+        <span>Risk-first approach</span>
+        <span>Mobile friendly</span>
+        <span>Built for traders</span>
       </div>
-      <div class="grid">
-        <article class="card">
-          <div class="icon">🧮</div>
-          <h3>Lot Size Calculator</h3>
-          <p>Plan position size using account balance, risk and stop-loss distance.</p>
-        </article>
-        <article class="card">
-          <div class="icon">🎯</div>
-          <h3>Risk / Reward</h3>
-          <p>Compare potential risk and reward before entering a trade.</p>
-        </article>
-        <article class="card">
-          <div class="icon">🥇</div>
-          <h3>Gold Calculator</h3>
-          <p>Tools planned for XAUUSD trade planning and risk estimation.</p>
-        </article>
-        <article class="card">
-          <div class="icon">💱</div>
-          <h3>Forex Calculator</h3>
-          <p>Plan trades across major currency pairs.</p>
-        </article>
-        <article class="card">
-          <div class="icon">📊</div>
-          <h3>Silver & Oil</h3>
-          <p>Commodity trade-planning tools, with broker specifications considered.</p>
-        </article>
-        <article class="card" id="journal">
-          <div class="icon">📔</div>
-          <h3>Trading Journal</h3>
-          <p>A cloud journal for trade records, performance tracking and strategy notes.</p>
-        </article>
-      </div>
-    </section>
-
-    <div class="status">
-      <strong>Coming in stages:</strong> Interactive calculators, secure account login,
-      cloud journal, market news and economic calendar.
     </div>
-  </main>
 
-  <footer>
-    Forex Gold Tools · Educational and planning tools only.
-    Trading involves risk. No profit is guaranteed.
-  </footer>
+    <div class="market-panel">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title">Your Trading Workspace</div>
+          <div class="panel-sub">Plan · Calculate · Review</div>
+        </div>
+        <span class="demo-badge">TOOLKIT</span>
+      </div>
+      <div class="market-list">
+        <div class="market-row">
+          <div class="asset">
+            <div class="asset-icon">🥇</div>
+            <div><div class="asset-name">Gold · XAUUSD</div><div class="asset-sub">Precious metals</div></div>
+          </div>
+          <div class="market-value">Risk planning<small>Calculator planned</small></div>
+        </div>
+        <div class="market-row">
+          <div class="asset">
+            <div class="asset-icon">💱</div>
+            <div><div class="asset-name">Forex Pairs</div><div class="asset-sub">Currency markets</div></div>
+          </div>
+          <div class="market-value">Position size<small>Calculator planned</small></div>
+        </div>
+        <div class="market-row">
+          <div class="asset">
+            <div class="asset-icon">🥈</div>
+            <div><div class="asset-name">Silver · XAGUSD</div><div class="asset-sub">Precious metals</div></div>
+          </div>
+          <div class="market-value">Trade planning<small>Calculator planned</small></div>
+        </div>
+        <div class="market-row">
+          <div class="asset">
+            <div class="asset-icon">🛢️</div>
+            <div><div class="asset-name">Oil</div><div class="asset-sub">Energy markets</div></div>
+          </div>
+          <div class="market-value">Risk controls<small>Calculator planned</small></div>
+        </div>
+      </div>
+      <div class="panel-note">
+        Illustrative feature preview — not live prices or trading signals.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tools">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Built for better decisions</div>
+        <h2>Your Trading Toolkit</h2>
+        <p class="section-desc">Practical tools for planning and reviewing your trades.</p>
+      </div>
+    </div>
+
+    <div class="tool-grid">
+      <article class="tool-card">
+        <div class="tool-icon">⌗</div>
+        <h3>Lot Size Calculator</h3>
+        <p>Estimate position size from account balance, risk percentage and stop-loss distance.</p>
+        <a class="card-link" href="#coming-soon">Calculator coming next <span>→</span></a>
+        <div><span class="pill">RISK MANAGEMENT</span></div>
+      </article>
+      <article class="tool-card">
+        <div class="tool-icon">◎</div>
+        <h3>Risk / Reward Planner</h3>
+        <p>Compare planned risk with potential reward before placing a trade.</p>
+        <a class="card-link" href="#coming-soon">Calculator coming next <span>→</span></a>
+        <div><span class="pill">TRADE PLANNING</span></div>
+      </article>
+      <article class="tool-card">
+        <div class="tool-icon">◆</div>
+        <h3>Gold Calculator</h3>
+        <p>Plan XAUUSD trades using your broker's contract and tick specifications.</p>
+        <a class="card-link" href="#coming-soon">Calculator coming next <span>→</span></a>
+        <div><span class="pill">XAUUSD</span></div>
+      </article>
+      <article class="tool-card">
+        <div class="tool-icon">↔</div>
+        <h3>Forex Calculator</h3>
+        <p>Estimate position size and pip-related risk for supported currency pairs.</p>
+        <a class="card-link" href="#coming-soon">Calculator coming next <span>→</span></a>
+        <div><span class="pill">FOREX PAIRS</span></div>
+      </article>
+      <article class="tool-card">
+        <div class="tool-icon">◈</div>
+        <h3>Silver & Oil Tools</h3>
+        <p>Prepare commodity calculations with instrument-specific contract settings.</p>
+        <a class="card-link" href="#coming-soon">Tools coming next <span>→</span></a>
+        <div><span class="pill">COMMODITIES</span></div>
+      </article>
+      <article class="tool-card">
+        <div class="tool-icon">▤</div>
+        <h3>Trading Journal</h3>
+        <p>Record trades, review performance and keep notes about your strategy.</p>
+        <a class="card-link" href="#journal">Explore journal preview <span>→</span></a>
+        <div><span class="pill">PERFORMANCE TRACKING</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="journal">
+  <div class="container">
+    <div class="journal-wrap">
+      <div>
+        <div class="kicker">Learn from every trade</div>
+        <h2>Build your own<br>Trading Journal.</h2>
+        <p>
+          Keep your trade history organized and use your results to understand
+          your habits, strategies and risk management over time.
+        </p>
+        <div class="journal-list">
+          <div><span>✓</span> Manual trade records and strategy notes</div>
+          <div><span>✓</span> Daily and monthly performance summaries</div>
+          <div><span>✓</span> Win rate and profit/loss tracking</div>
+          <div><span>✓</span> Private account-based records — after login setup</div>
+        </div>
+        <a class="btn btn-gold" href="#coming-soon">Journal setup coming next ↗</a>
+      </div>
+      <div class="journal-preview">
+        <div class="preview-head">
+          <span>Performance Overview</span>
+          <span class="preview-tag">PREVIEW</span>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-label">Total Trades</div>
+            <div class="stat-value">—</div>
+            <div class="stat-note">Your records will appear here</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Win Rate</div>
+            <div class="stat-value">—</div>
+            <div class="stat-note">Calculated from saved trades</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Net P/L</div>
+            <div class="stat-value">—</div>
+            <div class="stat-note">Based on your entries</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Risk Review</div>
+            <div class="stat-value">—</div>
+            <div class="stat-note">Your risk data</div>
+          </div>
+        </div>
+        <p class="panel-note">No sample results or performance claims are displayed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="kicker">Simple by design</div>
+        <h2>A Clearer Trading Workflow</h2>
+        <p class="section-desc">Designed to help organize your process, not promise profits.</p>
+      </div>
+    </div>
+    <div class="feature-strip">
+      <div class="feature">
+        <strong>01 · Plan</strong>
+        <p>Define your risk, position size and trade levels before entry.</p>
+      </div>
+      <div class="feature">
+        <strong>02 · Record</strong>
+        <p>Keep a consistent journal of trades and strategy decisions.</p>
+      </div>
+      <div class="feature">
+        <strong>03 · Review</strong>
+        <p>Learn from recorded performance and refine your process.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="coming-soon">
+  <div class="container">
+    <div class="cta">
+      <div class="kicker">The toolkit is growing</div>
+      <h2>Make your next decision a planned one.</h2>
+      <p>
+        Interactive calculators, account login, cloud journaling,
+        market news and economic calendar are being built in stages.
+      </p>
+      <a class="btn btn-gold" href="#tools">Explore the Toolkit ↑</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container footer-row">
+    <div>
+      <a class="brand" href="#home"><span class="brand-icon">↗</span><span>FOREX <span>GOLD</span> TOOLS</span></a>
+      <p>Tools for planning, risk awareness and trading education.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#tools">Tools</a>
+      <a href="#journal">Journal</a>
+      <a href="#features">About</a>
+    </div>
+  </div>
+  <div class="container">
+    <p>Risk warning: Forex and CFD trading involve substantial risk. These tools are for educational and planning purposes only. No profit is guaranteed.</p>
+    <p>© <span id="year"></span> Forex Gold Tools</p>
+  </div>
+</footer>
+
+<script>
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
+
+menuBtn.addEventListener("click", () => {
+  const isOpen = navLinks.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded", String(isOpen));
+});
+
+navLinks.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("open");
+    menuBtn.setAttribute("aria-expanded", "false");
+  });
+});
+
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
-
