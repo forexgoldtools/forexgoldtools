@@ -1,344 +1,80 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b1020">
-<meta name="description" content="Forex Gold Tools - Trading calculators, trading journal, market education and daily trading tips.">
-<title>Forex Gold Tools | Trade Smarter</title>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#08111f" />
+<meta name="description" content="Free trading calculators for position sizing, risk reward, pip value, and stop loss and take profit planning." />
+<title>ForexGoldTools | All-in-One Trading Calculator</title>
 <style>
-:root {
-  --bg:#090e1b;
-  --panel:#111a2c;
-  --panel2:#151f33;
-  --gold:#f0c56b;
-  --gold2:#ffe4a1;
-  --text:#f4f5f8;
-  --muted:#a7b0c3;
-  --border:rgba(255,255,255,.09);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;
-  font-family:Inter,Arial,sans-serif;
-  color:var(--text);
-  background:var(--bg);
-  line-height:1.6;
-}
-a{color:inherit;text-decoration:none}
-button{font:inherit}
-.container{width:min(1140px,92%);margin:auto}
-header{
-  position:sticky;top:0;z-index:20;
-  background:rgba(9,14,27,.94);
-  backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--border);
-}
-.nav{
-  min-height:74px;display:flex;align-items:center;
-  justify-content:space-between;gap:20px;
-}
-.logo{font-size:19px;font-weight:800;letter-spacing:-.5px}
-.logo span{color:var(--gold)}
-.nav-links{display:flex;align-items:center;gap:23px}
-.nav-links a{font-size:13px;color:var(--muted)}
-.nav-links a:hover{color:var(--gold)}
-.menu-btn{
-  display:none;background:transparent;color:white;
-  border:1px solid var(--border);padding:8px 12px;
-  border-radius:9px;cursor:pointer;
-}
-.hero{
-  padding:85px 0 65px;
-  background:
-    radial-gradient(ellipse at 80% 10%,rgba(213,166,72,.13),transparent 38%),
-    radial-gradient(ellipse at 10% 70%,rgba(57,91,160,.13),transparent 40%);
-}
-.eyebrow{
-  display:inline-block;border:1px solid rgba(240,197,107,.3);
-  background:rgba(240,197,107,.07);color:var(--gold2);
-  padding:7px 12px;border-radius:30px;font-size:12px;
-  letter-spacing:1px;text-transform:uppercase;
-}
-h1{
-  font-size:clamp(38px,6vw,67px);
-  line-height:1.08;letter-spacing:-2px;
-  max-width:760px;margin:22px 0;
-}
-h1 span,.gold{color:var(--gold)}
-.hero p{max-width:650px;color:var(--muted);font-size:17px}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:27px}
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  padding:12px 19px;border-radius:10px;font-weight:700;
-  border:1px solid var(--border);cursor:pointer;
-}
-.btn-primary{background:var(--gold);color:#17130a;border-color:var(--gold)}
-.btn-primary:hover{background:var(--gold2)}
-.btn-secondary{background:rgba(255,255,255,.035)}
-.btn-secondary:hover{border-color:var(--gold)}
-.stats{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:12px;margin-top:44px;max-width:700px;
-}
-.stat{
-  background:rgba(255,255,255,.025);border:1px solid var(--border);
-  border-radius:13px;padding:16px;
-}
-.stat strong{display:block;color:var(--gold);font-size:17px}
-.stat span{font-size:12px;color:var(--muted)}
-section{padding:65px 0}
-.section-head{margin-bottom:28px}
-.section-head h2{font-size:clamp(27px,4vw,36px);margin:0 0 8px;letter-spacing:-.7px}
-.section-head p{margin:0;color:var(--muted);max-width:650px}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
-.card{
-  display:flex;flex-direction:column;align-items:flex-start;
-  background:linear-gradient(145deg,var(--panel),#0e1626);
-  border:1px solid var(--border);border-radius:17px;
-  padding:23px;min-height:235px;transition:.2s;
-}
-.card:hover{transform:translateY(-4px);border-color:rgba(240,197,107,.45)}
-.card-icon{
-  width:47px;height:47px;display:grid;place-items:center;
-  border-radius:13px;background:rgba(240,197,107,.1);
-  color:var(--gold);font-size:23px;margin-bottom:17px;
-}
-.card h3{font-size:19px;margin:0 0 8px}
-.card p{font-size:14px;color:var(--muted);margin:0 0 20px}
-.card-link{margin-top:auto;color:var(--gold);font-size:13px;font-weight:700}
-.label{
-  font-size:10px;text-transform:uppercase;letter-spacing:.7px;
-  color:var(--gold2);border:1px solid rgba(240,197,107,.25);
-  padding:4px 8px;border-radius:20px;margin-bottom:13px;
-}
-.featured{
-  border-color:rgba(240,197,107,.4);
-  background:linear-gradient(145deg,#1d2637,#111a2c);
-}
-.dark-section{background:#0c1322;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.step{padding:22px;border:1px solid var(--border);border-radius:15px;background:var(--panel)}
-.step-num{color:var(--gold);font-size:13px;font-weight:800}
-.step h3{margin:8px 0}
-.step p{font-size:14px;color:var(--muted);margin-bottom:0}
-.disclaimer{
-  padding:16px 18px;border:1px solid var(--border);
-  border-radius:12px;color:var(--muted);font-size:12px;
-  margin-top:25px;
-}
-footer{padding:28px 0;color:var(--muted);font-size:12px}
-.footer-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-@media(max-width:800px){
-  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .nav-links{
-    display:none;position:absolute;top:74px;left:0;right:0;
-    background:#0d1423;padding:18px 5%;border-bottom:1px solid var(--border);
-    flex-direction:column;align-items:flex-start;gap:16px;
-  }
-  .nav-links.open{display:flex}
-  .menu-btn{display:block}
-  .hero{padding:65px 0 48px}
-}
-@media(max-width:560px){
-  .grid,.steps{grid-template-columns:1fr}
-  .stats{grid-template-columns:1fr}
-  .card{min-height:200px}
-  section{padding:48px 0}
-  h1{letter-spacing:-1.2px}
-}
+:root{--bg:#07101d;--panel:#0d1929;--panel2:#101f32;--gold:#e9bd63;--gold2:#ffdc8b;--text:#f4f6fb;--muted:#a4b0c2;--line:#26364b;--green:#4ed6a0;--red:#ff7777;--radius:18px;--shadow:0 18px 50px #0003}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#1a2b43 0%,var(--bg) 52%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}button,input,select{font:inherit}button{cursor:pointer}.wrap{width:min(1180px,calc(100% - 32px));margin:auto}.topbar{border-bottom:1px solid #ffffff12;background:#07101ddd;backdrop-filter:blur(12px);position:sticky;top:0;z-index:5}.nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;align-items:center;gap:11px;color:var(--text);text-decoration:none;font-weight:850;letter-spacing:.2px}.brandmark{display:grid;place-items:center;width:39px;height:39px;border-radius:12px;background:linear-gradient(135deg,var(--gold2),#b98532);color:#101827;font-size:20px;box-shadow:0 5px 22px #e9bd6330}.brand small{display:block;color:var(--gold);font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:800}.navlinks{display:flex;gap:20px;align-items:center}.navlinks a{color:var(--muted);font-size:13px;text-decoration:none}.navlinks a:hover{color:var(--gold2)}.pill{border:1px solid #e9bd6355;border-radius:999px;padding:8px 12px;color:var(--gold2);font-size:12px;font-weight:750;white-space:nowrap}.hero{text-align:center;padding:58px 0 32px}.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid #e9bd6344;background:#e9bd630d;color:var(--gold2);border-radius:999px;padding:7px 12px;font-size:11px;text-transform:uppercase;letter-spacing:1.5px;font-weight:800}.eyebrow:before{content:"";width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:0 0 10px var(--green)}h1{font-size:clamp(32px,5vw,54px);line-height:1.1;letter-spacing:-1.8px;margin:19px 0 14px}.gold{background:linear-gradient(90deg,#f9dc99,#d8a94c);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:680px;margin:0 auto;color:var(--muted);font-size:15px}.hero-tags{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:22px}.hero-tags span{border:1px solid var(--line);background:#0d1929a8;color:#cbd4e1;border-radius:8px;padding:7px 10px;font-size:12px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin:22px 0 15px}.section-head h2{font-size:21px;margin:0;letter-spacing:-.4px}.section-head p{margin:5px 0 0;color:var(--muted);font-size:13px}.main-grid{display:grid;grid-template-columns:255px minmax(0,1fr);gap:18px;align-items:start}.sidebar,.card,.settings{background:linear-gradient(155deg,#102035,#0b1726);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.sidebar{padding:12px;position:sticky;top:90px}.side-label{font-size:10px;color:#8391a5;letter-spacing:1.5px;font-weight:800;text-transform:uppercase;padding:8px 10px}.tab{width:100%;display:flex;align-items:center;gap:11px;text-align:left;border:1px solid transparent;background:transparent;color:#b9c4d3;padding:12px 10px;border-radius:12px;margin:2px 0;font-weight:700;font-size:13px}.tab .num{width:30px;height:30px;display:grid;place-items:center;background:#17273b;border:1px solid #2b3d53;border-radius:9px;color:var(--gold2);font-size:14px}.tab.active{background:linear-gradient(90deg,#e9bd6319,#e9bd6308);border-color:#e9bd6344;color:#fff}.tab.active .num{background:var(--gold);color:#111a28;border-color:var(--gold)}.side-note{margin:13px 3px 2px;padding:12px;border-radius:12px;background:#07111f;border:1px solid #1d2d41;color:#8f9db0;font-size:11px}.side-note strong{display:block;color:var(--gold2);margin-bottom:4px}.workspace{min-width:0}.card{padding:23px}.calc-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:20px}.calc-title{display:flex;align-items:center;gap:12px}.calc-icon{display:grid;place-items:center;flex:0 0 45px;height:45px;border-radius:13px;background:#e9bd6315;border:1px solid #e9bd6340;font-size:22px}.calc-head h3{font-size:20px;margin:0 0 3px}.calc-head p{font-size:12px;color:var(--muted);margin:0}.tag{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold2);background:#e9bd6314;border:1px solid #e9bd633b;border-radius:8px;padding:7px 9px;white-space:nowrap}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.field{min-width:0}.field.full{grid-column:1/-1}.field label{display:flex;justify-content:space-between;gap:8px;color:#cbd4e1;font-size:12px;font-weight:700;margin-bottom:7px}.hint{font-size:10px;color:#8290a4;font-weight:500}.control{width:100%;min-height:45px;border:1px solid #2a3b51;border-radius:10px;background:#081321;color:#f5f7fb;padding:10px 12px;outline:none;transition:border .15s,box-shadow .15s}.control:focus{border-color:var(--gold);box-shadow:0 0 0 3px #e9bd6318}.control option{background:#0d1929}.input-unit{position:relative}.input-unit .control{padding-right:48px}.unit{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#8190a5;font-size:11px;pointer-events:none}.row-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:21px}.btn{border-radius:10px;padding:11px 17px;border:1px solid var(--line);background:#17263a;color:#e8edf5;font-size:12px;font-weight:800}.btn.primary{background:linear-gradient(135deg,var(--gold2),#d4a14a);color:#111927;border-color:transparent;box-shadow:0 6px 20px #e9bd6320}.btn:hover{filter:brightness(1.08)}.result{margin-top:20px;border:1px solid #e9bd634a;border-radius:15px;background:linear-gradient(135deg,#e9bd6310,#081321 80%);padding:18px}.result-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}.result-top h4{font-size:13px;margin:0}.result-top span{color:var(--green);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px}.result-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.metric{border:1px solid #26374b;border-radius:11px;background:#07111ebd;padding:13px;min-width:0}.metric .label{color:#8f9eb1;font-size:10px;margin-bottom:5px}.metric .value{font-size:clamp(17px,2vw,24px);font-weight:850;letter-spacing:-.5px;overflow-wrap:anywhere}.metric .sub{font-size:10px;color:#8f9eb1;margin-top:3px}.metric.goldmetric .value{color:var(--gold2)}.metric.positive .value{color:var(--green)}.metric.negative .value{color:var(--red)}.result-note{color:#8e9cb0;font-size:11px;margin:13px 0 0}.error{display:none;color:#ffb2b2;background:#401d27;border:1px solid #713343;border-radius:9px;padding:10px 12px;font-size:12px;margin-top:14px}.settings{margin-top:18px;padding:20px}.settings summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;font-weight:800}.settings summary::-webkit-details-marker{display:none}.settings summary span{color:var(--gold2);font-size:12px}.settings-body{padding-top:19px}.settings-intro{color:var(--muted);font-size:12px;margin:0 0 16px}.instrument-banner{display:flex;align-items:flex-start;gap:10px;border:1px solid #725a2b;background:#e9bd630d;color:#c4cbd6;padding:12px;border-radius:10px;font-size:11px;margin-top:14px}.instrument-banner strong{color:var(--gold2)}.info-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:24px 0 35px}.info-card{border:1px solid var(--line);background:#0c1827;border-radius:14px;padding:17px}.info-card .icon{font-size:22px}.info-card h3{font-size:13px;margin:9px 0 5px}.info-card p{font-size:11px;color:var(--muted);margin:0}.disclaimer{border:1px solid #29394c;background:#0a1523;border-radius:12px;padding:15px;color:#9aa8bb;font-size:11px;margin-bottom:30px}.disclaimer strong{color:#e5c27a}.footer{border-top:1px solid #ffffff12;padding:22px 0 30px;color:#758398;font-size:11px}.footer-inner{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}.footer a{color:#aeb9c8;text-decoration:none}.hidden{display:none!important}
+@media(max-width:850px){.main-grid{grid-template-columns:1fr}.sidebar{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}.side-label,.side-note{grid-column:1/-1}.tab{margin:0}.navlinks{gap:10px}.navlinks a:not(.pill){display:none}}
+@media(max-width:560px){.wrap{width:min(100% - 22px,1180px)}.nav{min-height:62px}.brand{font-size:14px}.brandmark{width:34px;height:34px}.pill{font-size:10px;padding:7px 9px}.hero{padding:42px 0 20px}h1{letter-spacing:-1px}.hero p{font-size:13px}.section-head{align-items:start;flex-direction:column;gap:6px}.sidebar{grid-template-columns:1fr 1fr;padding:8px}.tab{font-size:11px;padding:9px 7px;gap:7px}.tab .num{width:25px;height:25px;font-size:12px}.card{padding:16px}.calc-head{gap:8px}.calc-head h3{font-size:17px}.calc-icon{flex-basis:38px;height:38px}.tag{font-size:8px;padding:6px}.fields{gap:13px 10px}.control{font-size:13px;padding:10px}.result{padding:12px}.result-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.metric{padding:11px}.metric .value{font-size:19px}.info-grid{grid-template-columns:1fr}.settings{padding:16px}}
+@media(max-width:370px){.fields,.row-fields{grid-template-columns:1fr}.field.full{grid-column:auto}.result-grid{grid-template-columns:1fr 1fr}.calc-head{flex-direction:column}}
 </style>
 </head>
-
 <body>
-<header>
-  <div class="container nav">
-    <a class="logo" href="#home">FOREX <span>GOLD</span> TOOLS</a>
-    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu"
-      aria-expanded="false">☰ Menu</button>
-    <nav class="nav-links" id="navLinks">
-      <a href="#tools">Trading Tools</a>
-      <a href="#journal">Journal</a>
-      <a href="#analysis">Market Analysis</a>
-      <a href="#tips">Daily Tips</a>
-      <a href="#learning">Learning</a>
-    </nav>
-  </div>
-</header>
-
-<main>
-<section class="hero" id="home">
-  <div class="container">
-    <span class="eyebrow">Your Trading Companion</span>
-    <h1>Trade Smarter.<br>Manage Risk. <span>Learn Daily.</span></h1>
-    <p>
-      Your trading workspace for position sizing, risk management,
-      trade tracking and market education — all in one place.
-    </p>
-    <div class="actions">
-      <a class="btn btn-primary" href="#tools">Explore Trading Tools →</a>
-      <a class="btn btn-secondary" href="#journal">Explore Trading Journal</a>
-    </div>
-    <div class="stats">
-      <div class="stat"><strong>All-in-One</strong><span>Trading Calculator</span></div>
-      <div class="stat"><strong>Track</strong><span>Your Trading Performance</span></div>
-      <div class="stat"><strong>Learn</strong><span>At Your Own Pace</span></div>
-    </div>
-  </div>
+<header class="topbar"><div class="wrap nav"><a class="brand" href="#top"><span class="brandmark">₿</span><span>ForexGoldTools<small>Trade smarter</small></span></a><nav class="navlinks"><a href="#calculators">Calculators</a><a href="#guide">How it works</a><a class="pill" href="#broker-settings">Broker Settings ↗</a></nav></div></header>
+<main id="top" class="wrap">
+<section class="hero"><span class="eyebrow">Free trading toolkit</span><h1>Trade with a plan.<br><span class="gold">Manage your risk.</span></h1><p>Make more informed trading decisions with simple calculators for position sizing, risk/reward, pip value, and SL/TP planning.</p><div class="hero-tags"><span>✦ XAUUSD Gold</span><span>✦ XAGUSD Silver</span><span>✦ Forex</span><span>✦ Oil</span><span>✦ Broker-adjustable</span></div></section>
+<div id="calculators" class="section-head"><div><h2>All-in-One Trading Calculator</h2><p>Choose a tool, enter your trade details, and calculate.</p></div><span class="pill">100% Free · No sign-up</span></div>
+<div class="main-grid">
+<aside class="sidebar"><div class="side-label">Choose calculator</div><button class="tab active" data-tab="position"><span class="num">01</span><span>Position Size & Lot</span></button><button class="tab" data-tab="rr"><span class="num">02</span><span>Risk / Reward</span></button><button class="tab" data-tab="pip"><span class="num">03</span><span>Pip & Point Value</span></button><button class="tab" data-tab="sltp"><span class="num">04</span><span>SL / TP Planner</span></button><div class="side-note"><strong>Risk first, always.</strong>Position size is calculated from the risk amount and the instrument specifications entered below.</div></aside>
+<div class="workspace">
+<section class="card calc-panel" id="panel-position">
+<div class="calc-head"><div class="calc-title"><span class="calc-icon">◈</span><div><h3>Position Size & Lot Calculator</h3><p>Calculate a position size from your account risk.</p></div></div><span class="tag">Risk control</span></div>
+<div class="fields"><div class="field"><label for="p-instrument">Instrument</label><select id="p-instrument" class="control instrument-select"><option value="XAUUSD">XAUUSD · Gold</option><option value="XAGUSD">XAGUSD · Silver</option><option value="FOREX">Forex pair</option><option value="OIL">Oil</option><option value="CUSTOM">Custom instrument</option></select></div><div class="field"><label for="p-currency">Account currency</label><select id="p-currency" class="control currency-select"><option value="USD">USD ($)</option><option value="INR">INR (₹)</option><option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option><option value="OTHER">Other / broker currency</option></select></div><div class="field"><label for="p-balance">Account balance</label><div class="input-unit"><input id="p-balance" class="control" type="number" min="0.01" step="any" value="1000"><span class="unit">balance</span></div></div><div class="field"><label for="p-risk">Risk per trade</label><div class="input-unit"><input id="p-risk" class="control" type="number" min="0.01" max="100" step="any" value="1"><span class="unit">%</span></div></div><div class="field"><label for="p-entry">Entry price</label><input id="p-entry" class="control" type="number" min="0" step="any" value="2650"></div><div class="field"><label for="p-stop">Stop loss price</label><input id="p-stop" class="control" type="number" min="0" step="any" value="2640"></div></div>
+<div class="actions"><button class="btn primary" id="calc-position">Calculate position size →</button><button class="btn" data-reset="position">Reset</button></div><div class="error" id="err-position" role="alert"></div><div class="result" id="res-position" aria-live="polite"><div class="result-top"><h4>Your position plan</h4><span>Estimated</span></div><div class="result-grid"><div class="metric goldmetric"><div class="label">Suggested lot size</div><div class="value" id="out-lot">0.10</div><div class="sub">Rounded down to lot step</div></div><div class="metric"><div class="label">Risk amount</div><div class="value" id="out-risk">$10.00</div><div class="sub">At the selected risk %</div></div><div class="metric"><div class="label">Stop distance</div><div class="value" id="out-distance">10.00</div><div class="sub">Price units</div></div></div><p class="result-note" id="position-note">Estimate uses the current broker settings below. Costs and slippage are excluded.</p></div>
 </section>
-
-<section id="tools">
-  <div class="container">
-    <div class="section-head">
-      <h2>Trading <span class="gold">Tools</span></h2>
-      <p>Useful tools to plan trades and manage risk with greater discipline.</p>
-    </div>
-    <div class="grid">
-      <article class="card featured">
-        <div class="card-icon">⌗</div>
-        <span class="label">Main Tool</span>
-        <h3>All-in-One Trading Calculator</h3>
-        <p>
-          Lot size, position sizing, risk/reward, pip and point value,
-          Stop Loss and Take Profit calculations in one place.
-        </p>
-        <a class="card-link" href="#calculator">Calculator planned →</a>
-      </article>
-
-      <article class="card" id="journal">
-        <div class="card-icon">▤</div>
-        <h3>Trading Journal</h3>
-        <p>Record trades, entry and exit prices, SL/TP, profit/loss,
-          strategy notes and review your performance.</p>
-        <a class="card-link" href="#journal-info">Journal planned →</a>
-      </article>
-
-      <article class="card" id="analysis">
-        <div class="card-icon">◈</div>
-        <h3>Daily Market Analysis</h3>
-        <p>Market outlook, important price levels, possible scenarios
-          and key economic events for selected instruments.</p>
-        <a class="card-link" href="#analysis-info">Analysis section →</a>
-      </article>
-
-      <article class="card" id="tips">
-        <div class="card-icon">✦</div>
-        <h3>Daily Trading Tips</h3>
-        <p>Learn risk management, trading psychology, chart reading,
-          technical concepts and disciplined trading habits.</p>
-        <a class="card-link" href="#tips-info">Learning tips →</a>
-      </article>
-
-      <article class="card" id="learning">
-        <div class="card-icon">▧</div>
-        <span class="label">Coming Soon</span>
-        <h3>Trading Books & eBooks</h3>
-        <p>Organized educational reading resources to help you build
-          your trading knowledge step by step.</p>
-        <a class="card-link" href="#future">Planned for later →</a>
-      </article>
-
-      <article class="card">
-        <div class="card-icon">▶</div>
-        <span class="label">Coming Soon</span>
-        <h3>Trading Courses</h3>
-        <p>Structured lessons for beginners and developing traders,
-          from basic concepts to risk management.</p>
-        <a class="card-link" href="#future">Planned for later →</a>
-      </article>
-    </div>
-  </div>
+<section class="card calc-panel hidden" id="panel-rr">
+<div class="calc-head"><div class="calc-title"><span class="calc-icon">⇄</span><div><h3>Risk / Reward Calculator</h3><p>Compare potential loss against potential reward.</p></div></div><span class="tag">Trade planning</span></div>
+<div class="fields"><div class="field"><label for="rr-side">Trade direction</label><select id="rr-side" class="control"><option value="BUY">Buy / Long</option><option value="SELL">Sell / Short</option></select></div><div class="field"><label for="rr-entry">Entry price</label><input id="rr-entry" class="control" type="number" min="0" step="any" value="2650"></div><div class="field"><label for="rr-stop">Stop loss price</label><input id="rr-stop" class="control" type="number" min="0" step="any" value="2640"></div><div class="field"><label for="rr-target">Take profit price</label><input id="rr-target" class="control" type="number" min="0" step="any" value="2670"></div><div class="field"><label for="rr-lots">Lot size</label><input id="rr-lots" class="control" type="number" min="0.0001" step="any" value="0.10"></div><div class="field"><label for="rr-balance">Account balance (optional)</label><input id="rr-balance" class="control" type="number" min="0" step="any" value="1000"></div><div class="field"><label for="rr-currency">Display currency</label><select id="rr-currency" class="control currency-select"><option value="USD">USD ($)</option><option value="INR">INR (₹)</option><option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option><option value="OTHER">Other</option></select></div></div>
+<div class="actions"><button class="btn primary" id="calc-rr">Calculate risk / reward →</button><button class="btn" data-reset="rr">Reset</button></div><div class="error" id="err-rr" role="alert"></div><div class="result" aria-live="polite"><div class="result-top"><h4>Risk / reward summary</h4><span>Estimated</span></div><div class="result-grid"><div class="metric"><div class="label">Risk / reward ratio</div><div class="value" id="rr-ratio">1 : 2.00</div><div class="sub">Risk : reward</div></div><div class="metric negative"><div class="label">Potential loss</div><div class="value" id="rr-loss">$10.00</div><div class="sub">If stop loss is hit</div></div><div class="metric positive"><div class="label">Potential profit</div><div class="value" id="rr-profit">$20.00</div><div class="sub">If take profit is hit</div></div></div><p class="result-note" id="rr-note">Estimates exclude commissions, spread, swaps, and slippage.</p></div>
 </section>
-
-<section class="dark-section" id="calculator">
-  <div class="container">
-    <div class="section-head">
-      <h2>One Calculator. <span class="gold">Multiple Functions.</span></h2>
-      <p>The planned calculator will bring the essential trade-planning calculations together.</p>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <span class="step-num">01 / POSITION SIZE</span>
-        <h3>Calculate Lot Size</h3>
-        <p>Use account balance, risk percentage, entry price and Stop Loss to estimate position size.</p>
-      </div>
-      <div class="step">
-        <span class="step-num">02 / TRADE PLANNING</span>
-        <h3>Plan SL & TP</h3>
-        <p>Calculate potential loss, target price, expected reward and risk/reward ratio.</p>
-      </div>
-      <div class="step">
-        <span class="step-num">03 / PRICE VALUE</span>
-        <h3>Pip & Point Value</h3>
-        <p>Estimate price-movement value using the selected instrument's trading specifications.</p>
-      </div>
-    </div>
-    <div class="disclaimer">
-      Calculator features are planned and are not active yet. Final calculations will depend
-      on instrument specifications, broker contract settings, account currency and trading costs.
-    </div>
-  </div>
+<section class="card calc-panel hidden" id="panel-pip">
+<div class="calc-head"><div class="calc-title"><span class="calc-icon">⌁</span><div><h3>Pip & Point Value Calculator</h3><p>Estimate value per price move for your lot size.</p></div></div><span class="tag">Value estimate</span></div>
+<div class="fields"><div class="field"><label for="pip-instrument">Instrument</label><select id="pip-instrument" class="control instrument-select"><option value="XAUUSD">XAUUSD · Gold</option><option value="XAGUSD">XAGUSD · Silver</option><option value="FOREX">Forex pair</option><option value="OIL">Oil</option><option value="CUSTOM">Custom instrument</option></select></div><div class="field"><label for="pip-lots">Lot size</label><input id="pip-lots" class="control" type="number" min="0.0001" step="any" value="0.10"></div><div class="field"><label for="pip-move">Price move to measure</label><input id="pip-move" class="control" type="number" min="0.0000001" step="any" value="1"></div><div class="field"><label for="pip-currency">Display currency</label><select id="pip-currency" class="control currency-select"><option value="USD">USD ($)</option><option value="INR">INR (₹)</option><option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option><option value="OTHER">Other</option></select></div></div>
+<div class="actions"><button class="btn primary" id="calc-pip">Calculate value →</button><button class="btn" data-reset="pip">Reset</button></div><div class="error" id="err-pip" role="alert"></div><div class="result" aria-live="polite"><div class="result-top"><h4>Price movement value</h4><span>Estimated</span></div><div class="result-grid"><div class="metric goldmetric"><div class="label">Value of selected move</div><div class="value" id="pip-value">$10.00</div><div class="sub">For entered lot size</div></div><div class="metric"><div class="label">Value per 1.00 price move</div><div class="value" id="pip-one">$10.00</div><div class="sub">At entered lot size</div></div><div class="metric"><div class="label">Value per 0.01 move</div><div class="value" id="pip-cent">$0.10</div><div class="sub">At entered lot size</div></div></div><p class="result-note">For Forex, this estimate assumes the quote currency matches your display currency. If not, an exchange-rate conversion is required.</p></div>
 </section>
-
-<section id="journal-info">
-  <div class="container">
-    <div class="section-head">
-      <h2>Build Better <span class="gold">Trading Habits</span></h2>
-      <p>A planned workspace for reviewing decisions, recording trades and learning from results.</p>
-    </div>
-    <div class="grid">
-      <article class="card">
-        <div class="card-icon">✎</div>
-        <h3>Record Every Trade</h3>
-        <p>Save trade details, strategy, notes and outcome in an organized journal.</p>
-      </article>
-      <article class="card" id="analysis-info">
-        <div class="card-icon">◉</div>
-        <h3>Market Outlook</h3>
-        <p>Review educational market scenarios and relevant economic events when published.</p>
-      </article>
-      <article class="card" id="tips-info">
-        <div class="card-icon">◎</div>
-        <h3>Keep Learning</h3>
-        <p>Build a consistent learning routine with practical trading education and tips.</p>
-      </article>
-    </div>
-    <div class="disclaimer" id="future">
-      <strong>Important:</strong> This website is an educational and trade-planning project.
-      Market analysis and calculator features are not yet active. Nothing here guarantees profits
-      or should be treated as personalized financial advice.
-    </div>
-  </div>
+<section class="card calc-panel hidden" id="panel-sltp">
+<div class="calc-head"><div class="calc-title"><span class="calc-icon">⌖</span><div><h3>Stop Loss / Take Profit Planner</h3><p>Plan levels from entry, stop distance, and reward ratio.</p></div></div><span class="tag">Price levels</span></div>
+<div class="fields"><div class="field"><label for="sl-side">Trade direction</label><select id="sl-side" class="control"><option value="BUY">Buy / Long</option><option value="SELL">Sell / Short</option></select></div><div class="field"><label for="sl-entry">Entry price</label><input id="sl-entry" class="control" type="number" min="0" step="any" value="2650"></div><div class="field"><label for="sl-distance">Stop distance</label><input id="sl-distance" class="control" type="number" min="0.0000001" step="any" value="10"></div><div class="field"><label for="sl-rr">Risk / reward ratio</label><select id="sl-rr" class="control"><option value="1">1 : 1</option><option value="1.5">1 : 1.5</option><option value="2" selected>1 : 2</option><option value="2.5">1 : 2.5</option><option value="3">1 : 3</option><option value="4">1 : 4</option><option value="5">1 : 5</option></select></div><div class="field"><label for="sl-currency">Display currency</label><select id="sl-currency" class="control currency-select"><option value="USD">USD ($)</option><option value="INR">INR (₹)</option><option value="EUR">EUR (€)</option><option value="GBP">GBP (£)</option><option value="OTHER">Other</option></select></div></div>
+<div class="actions"><button class="btn primary" id="calc-sltp">Plan SL / TP →</button><button class="btn" data-reset="sltp">Reset</button></div><div class="error" id="err-sltp" role="alert"></div><div class="result" aria-live="polite"><div class="result-top"><h4>Your planned levels</h4><span>Price levels</span></div><div class="result-grid"><div class="metric negative"><div class="label">Stop loss price</div><div class="value" id="sl-stopout">2640.00</div><div class="sub">Risk level</div></div><div class="metric positive"><div class="label">Take profit price</div><div class="value" id="sl-targetout">2670.00</div><div class="sub">Target level</div></div><div class="metric goldmetric"><div class="label">Target distance</div><div class="value" id="sl-targetdist">20.00</div><div class="sub">Price units</div></div></div><p class="result-note">These are planning levels, not trade instructions. Check tick size and price precision with your broker.</p></div>
 </section>
+<details class="settings" id="broker-settings" open><summary>Broker & instrument settings <span>Customize specifications ↓</span></summary><div class="settings-body"><p class="settings-intro">Choose an instrument above, then set the values from your broker's contract specification. Values below are examples only and may not match your broker.</p><div class="fields"><div class="field"><label for="s-contract">Contract size <span class="hint">units per 1.00 lot</span></label><input id="s-contract" class="control" type="number" min="0.000001" step="any" value="100"></div><div class="field"><label for="s-ticksize">Tick size <span class="hint">minimum price increment</span></label><input id="s-ticksize" class="control" type="number" min="0.00000001" step="any" value="0.01"></div><div class="field"><label for="s-tickvalue">Tick value <span class="hint">per 1.00 lot, in display currency</span></label><input id="s-tickvalue" class="control" type="number" min="0.00000001" step="any" value="1"></div><div class="field"><label for="s-minlot">Minimum lot size</label><input id="s-minlot" class="control" type="number" min="0.000001" step="any" value="0.01"></div><div class="field"><label for="s-lotstep">Lot step</label><input id="s-lotstep" class="control" type="number" min="0.000001" step="any" value="0.01"></div><div class="field"><label for="s-maxlot">Maximum lot size</label><input id="s-maxlot" class="control" type="number" min="0.000001" step="any" value="100"></div><div class="field"><label for="s-pip">Pip / point size <span class="hint">optional reference</span></label><input id="s-pip" class="control" type="number" min="0.00000001" step="any" value="0.01"></div><div class="field"><label for="s-priceprecision">Price decimals</label><select id="s-priceprecision" class="control"><option value="2" selected>2 decimals</option><option value="3">3 decimals</option><option value="4">4 decimals</option><option value="5">5 decimals</option><option value="1">1 decimal</option><option value="0">0 decimals</option></select></div></div><div class="instrument-banner"><span>ⓘ</span><div><strong>Important:</strong> Tick value is assumed to be expressed in the selected display currency and per 1.00 lot. For cross-currency Forex pairs, verify currency conversion. Values can be changed for each instrument; changing the instrument loads example defaults.</div></div><div class="actions"><button class="btn primary" id="apply-settings">Apply settings</button><button class="btn" id="restore-settings">Restore example defaults</button></div><p class="result-note" id="settings-status" aria-live="polite">Example specifications are loaded. Verify with your broker before using results.</p></div></details>
+</div></div>
+<section id="guide"><div class="section-head"><div><h2>Built for smarter trade planning</h2><p>Understand the numbers before placing a trade.</p></div></div><div class="info-grid"><article class="info-card"><div class="icon">◈</div><h3>Position sizing</h3><p>Estimate a lot size from your balance, risk percentage, stop distance, and tick value.</p></article><article class="info-card"><div class="icon">⇄</div><h3>Risk / reward</h3><p>Compare estimated loss at your stop with estimated reward at your target.</p></article><article class="info-card"><div class="icon">⌁</div><h3>Broker-aware values</h3><p>Adjust contract size, tick size, tick value, lot step, and precision to your instrument.</p></article></div><div class="disclaimer"><strong>Risk disclaimer:</strong> This tool is for educational and planning purposes only and does not provide financial advice or trading signals. Results are estimates based on the inputs supplied by you. Trading leveraged products can lead to losses, including losses greater than expected. Spread, commission, swaps, slippage, conversion rates, and broker-specific execution rules may change actual results. Always verify contract specifications in your trading platform before placing an order.</div></section>
 </main>
-
-<footer>
-  <div class="container footer-inner">
-    <span>© <span id="year"></span> Forex Gold Tools</span>
-    <span>Trade responsibly. Manage your risk.</span>
-  </div>
-</footer>
-
+<footer class="footer"><div class="wrap footer-inner"><span>© <span id="year"></span> ForexGoldTools. Trade with a plan.</span><span>Educational tools · Not financial advice</span></div></footer>
 <script>
-const menuBtn = document.getElementById('menuBtn');
-const navLinks = document.getElementById('navLinks');
-
-menuBtn.addEventListener('click', () => {
-  const open = navLinks.classList.toggle('open');
-  menuBtn.setAttribute('aria-expanded', String(open));
-});
-
-navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    menuBtn.setAttribute('aria-expanded', 'false');
-  });
-});
-
-document.getElementById('year').textContent = new Date().getFullYear();
+(()=>{'use strict';
+const $=id=>document.getElementById(id);const fmt=(n,d=2)=>Number.isFinite(n)?n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}):'—';
+const currencyMeta={USD:{symbol:'$',locale:'en-US'},INR:{symbol:'₹',locale:'en-IN'},EUR:{symbol:'€',locale:'de-DE'},GBP:{symbol:'£',locale:'en-GB'},OTHER:{symbol:'',locale:'en-US'}};
+function money(n,cur){const m=currencyMeta[cur]||currencyMeta.USD;return m.symbol+fmt(n,2)}
+const defaults={XAUUSD:{contract:100,ticksize:.01,tickvalue:1,minlot:.01,lotstep:.01,maxlot:100,pip:.01,precision:2},XAGUSD:{contract:5000,ticksize:.001,tickvalue:5,minlot:.01,lotstep:.01,maxlot:100,pip:.001,precision:3},FOREX:{contract:100000,ticksize:.0001,tickvalue:10,minlot:.01,lotstep:.01,maxlot:100,pip:.0001,precision:5},OIL:{contract:1000,ticksize:.01,tickvalue:10,minlot:.01,lotstep:.01,maxlot:100,pip:.01,precision:2},CUSTOM:{contract:1,ticksize:.01,tickvalue:1,minlot:.01,lotstep:.01,maxlot:100,pip:.01,precision:2}};
+let activeInstrument='XAUUSD';let spec={...defaults.XAUUSD};let specApplied=true;
+function readSpec(){return {contract:num('s-contract'),ticksize:num('s-ticksize'),tickvalue:num('s-tickvalue'),minlot:num('s-minlot'),lotstep:num('s-lotstep'),maxlot:num('s-maxlot'),pip:num('s-pip'),precision:Number($('s-priceprecision').value)}}
+function num(id){return Number($(id).value)}function val(id){return $(id).value}function set(id,v){$(id).value=String(v)}
+function error(kind,msg){const el=$('err-'+kind);el.textContent=msg;el.style.display=msg?'block':'none';return !!msg}
+function validSpec(){const s=readSpec();if(!Object.values(s).every(Number.isFinite)||s.contract<=0||s.ticksize<=0||s.tickvalue<=0||s.minlot<=0||s.lotstep<=0||s.maxlot<s.minlot||s.pip<=0)return null;return s}
+function loadDefaults(instrument){const s=defaults[instrument]||defaults.CUSTOM;set('s-contract',s.contract);set('s-ticksize',s.ticksize);set('s-tickvalue',s.tickvalue);set('s-minlot',s.minlot);set('s-lotstep',s.lotstep);set('s-maxlot',s.maxlot);set('s-pip',s.pip);set('s-priceprecision',s.precision);spec={...s};specApplied=true;$('settings-status').textContent='Example defaults loaded for '+instrument+'. Verify these values in your broker platform.';}
+function selectedInstrument(){return activeInstrument}
+function useInstrument(instrument){activeInstrument=instrument;loadDefaults(instrument);document.querySelectorAll('.instrument-select').forEach(el=>el.value=instrument);if(instrument==='FOREX'){$('p-entry').value='1.08500';$('p-stop').value='1.08300';$('rr-entry').value='1.08500';$('rr-stop').value='1.08300';$('rr-target').value='1.08900';$('sl-entry').value='1.08500';$('sl-distance').value='0.00200';}else if(instrument==='XAUUSD'){$('p-entry').value='2650';$('p-stop').value='2640';$('rr-entry').value='2650';$('rr-stop').value='2640';$('rr-target').value='2670';$('sl-entry').value='2650';$('sl-distance').value='10';}else if(instrument==='XAGUSD'){$('p-entry').value='32';$('p-stop').value='31.5';$('rr-entry').value='32';$('rr-stop').value='31.5';$('rr-target').value='33';$('sl-entry').value='32';$('sl-distance').value='.5';}else if(instrument==='OIL'){$('p-entry').value='75';$('p-stop').value='74';$('rr-entry').value='75';$('rr-stop').value='74';$('rr-target').value='77';$('sl-entry').value='75';$('sl-distance').value='1';}else{$('p-entry').value='100';$('p-stop').value='99';$('rr-entry').value='100';$('rr-stop').value='99';$('rr-target').value='102';$('sl-entry').value='100';$('sl-distance').value='1';}calculateAll();}
+function getSpec(){if(!specApplied){const s=validSpec();if(!s)return null;spec=s;specApplied=true;}return spec}
+function calcPosition(){if(error('position','')){}const s=getSpec();if(!s)return error('position','Broker settings are invalid. Enter positive contract, tick, and lot values.');const bal=num('p-balance'),riskPct=num('p-risk'),entry=num('p-entry'),stop=num('p-stop');if(![bal,riskPct,entry,stop].every(Number.isFinite)||bal<=0||riskPct<=0||riskPct>100||entry<=0||stop<=0||entry===stop)return error('position','Enter a positive balance, risk from 0.01% to 100%, and different positive entry and stop prices.');const risk=bal*riskPct/100,dist=Math.abs(entry-stop),lossPerLot=(dist/s.ticksize)*s.tickvalue; if(!Number.isFinite(lossPerLot)||lossPerLot<=0)return error('position','Unable to calculate risk with these specifications. Check tick size and tick value.');let raw=risk/lossPerLot;let lots=Math.floor((raw+1e-10)/s.lotstep)*s.lotstep;lots=Math.min(lots,s.maxlot);lots=Number(lots.toFixed(8));const below=lots<s.minlot;const actualLoss=lots*lossPerLot;$('out-lot').textContent=below?'Below min':fmt(lots,Math.min(4,Math.max(2,decimalPlaces(s.lotstep))));$('out-risk').textContent=money(risk,val('p-currency'));$('out-distance').textContent=fmt(dist,Math.min(6,s.precision));$('position-note').textContent=below?`Risk-based size is below your broker's minimum lot (${s.minlot}). Do not automatically increase it; that would exceed the selected risk.`:`Estimated loss at the calculated lot size: ${money(actualLoss,val('p-currency'))}. Costs and slippage are excluded.`;return error('position','')}
+function decimalPlaces(n){const x=String(n);return x.includes('.')?x.split('.')[1].length:0}
+function calcRR(){error('rr','');const s=getSpec();if(!s)return error('rr','Broker settings are invalid.');const entry=num('rr-entry'),stop=num('rr-stop'),target=num('rr-target'),lots=num('rr-lots'),side=val('rr-side');if(![entry,stop,target,lots].every(Number.isFinite)||entry<=0||stop<=0||target<=0||lots<=0)return error('rr','Enter positive entry, stop, target, and lot values.');const riskDist=side==='BUY'?entry-stop:stop-entry;const rewardDist=side==='BUY'?target-entry:entry-target;if(riskDist<=0||rewardDist<=0)return error('rr',side==='BUY'?'For a Buy, stop must be below entry and target above entry.':'For a Sell, stop must be above entry and target below entry.');const loss=(riskDist/s.ticksize)*s.tickvalue*lots,profit=(rewardDist/s.ticksize)*s.tickvalue*lots,ratio=rewardDist/riskDist;const cur=val('rr-currency');$('rr-ratio').textContent='1 : '+fmt(ratio,2);$('rr-loss').textContent=money(loss,cur);$('rr-profit').textContent=money(profit,cur);const bal=num('rr-balance');$('rr-note').textContent=(bal>0?`Potential loss is ${fmt(loss/bal*100,2)}% of the entered account balance. `:'')+'Estimates exclude commissions, spread, swaps, conversion, and slippage.';return false}
+function calcPip(){error('pip','');const s=getSpec();if(!s)return error('pip','Broker settings are invalid.');const lots=num('pip-lots'),move=num('pip-move');if(!Number.isFinite(lots)||!Number.isFinite(move)||lots<=0||move<=0)return error('pip','Enter positive lot size and price movement.');const one=(1/s.ticksize)*s.tickvalue*lots;const selected=(move/s.ticksize)*s.tickvalue*lots;const cur=val('pip-currency');$('pip-value').textContent=money(selected,cur);$('pip-one').textContent=money(one,cur);$('pip-cent').textContent=money((.01/s.ticksize)*s.tickvalue*lots,cur);return false}
+function calcSLTP(){error('sltp','');const entry=num('sl-entry'),dist=num('sl-distance'),rr=num('sl-rr'),side=val('sl-side');if(![entry,dist,rr].every(Number.isFinite)||entry<=0||dist<=0||rr<=0)return error('sltp','Enter a positive entry price, stop distance, and reward ratio.');const stop=side==='BUY'?entry-dist:entry+dist,target=side==='BUY'?entry+dist*rr:entry-dist*rr;const precision=spec.precision??2;$('sl-stopout').textContent=fmt(stop,precision);$('sl-targetout').textContent=fmt(target,precision);$('sl-targetdist').textContent=fmt(dist*rr,Math.min(6,precision+2));return false}
+function calculateAll(){calcPosition();calcRR();calcPip();calcSLTP()}
+$('calc-position').addEventListener('click',calcPosition);$('calc-rr').addEventListener('click',calcRR);$('calc-pip').addEventListener('click',calcPip);$('calc-sltp').addEventListener('click',calcSLTP);
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b===btn));document.querySelectorAll('.calc-panel').forEach(p=>p.classList.toggle('hidden',p.id!=='panel-'+btn.dataset.tab));}));
+document.querySelectorAll('.instrument-select').forEach(el=>el.addEventListener('change',()=>useInstrument(el.value)));
+$('apply-settings').addEventListener('click',()=>{const s=validSpec();if(!s){$('settings-status').textContent='Invalid settings: check all fields and ensure maximum lot is at least minimum lot.';return;}spec=s;specApplied=true;$('settings-status').textContent='Settings applied to all calculators. Verify values with your broker.';calculateAll()});$('restore-settings').addEventListener('click',()=>loadDefaults(activeInstrument));
+document.querySelectorAll('[data-reset]').forEach(btn=>btn.addEventListener('click',()=>{const kind=btn.dataset.reset;if(kind==='position'){set('p-balance',1000);set('p-risk',1);set('p-entry',activeInstrument==='FOREX'?1.085:activeInstrument==='XAGUSD'?32:activeInstrument==='OIL'?75:2650);set('p-stop',activeInstrument==='FOREX'?1.083:activeInstrument==='XAGUSD'?31.5:activeInstrument==='OIL'?74:2640);set('p-currency','USD');}if(kind==='rr'){set('rr-side','BUY');set('rr-entry',activeInstrument==='FOREX'?1.085:activeInstrument==='XAGUSD'?32:activeInstrument==='OIL'?75:2650);set('rr-stop',activeInstrument==='FOREX'?1.083:activeInstrument==='XAGUSD'?31.5:activeInstrument==='OIL'?74:2640);set('rr-target',activeInstrument==='FOREX'?1.089:activeInstrument==='XAGUSD'?33:activeInstrument==='OIL'?77:2670);set('rr-lots',.1);set('rr-balance',1000);set('rr-currency','USD');}if(kind==='pip'){set('pip-lots',.1);set('pip-move',1);set('pip-currency','USD');}if(kind==='sltp'){set('sl-side','BUY');set('sl-entry',activeInstrument==='FOREX'?1.085:activeInstrument==='XAGUSD'?32:activeInstrument==='OIL'?75:2650);set('sl-distance',activeInstrument==='FOREX'?.002:activeInstrument==='XAGUSD'?.5:activeInstrument==='OIL'?1:10);set('sl-rr',2);set('sl-currency','USD');}calculateAll()}));
+document.querySelectorAll('.currency-select').forEach(el=>el.addEventListener('change',()=>{calculateAll()}));document.querySelectorAll('#panel-position input,#panel-rr input,#panel-rr select,#panel-pip input,#panel-pip select,#panel-sltp input,#panel-sltp select').forEach(el=>el.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();calculateAll()}}));$('year').textContent=new Date().getFullYear();loadDefaults('XAUUSD');calculateAll();
+})();
 </script>
 </body>
 </html>
