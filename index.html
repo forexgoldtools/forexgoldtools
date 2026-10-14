@@ -1,1 +1,224 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1120">
+  <meta name="description" content="Forex Gold Tools — trading calculators, risk management and trading journal.">
+  <title>Forex Gold Tools | Smart Trading Toolkit</title>
+  <style>
+    :root {
+      --bg: #080e1b;
+      --panel: #111a2b;
+      --gold: #e8bd63;
+      --text: #f5f7fb;
+      --muted: #9ca9bd;
+      --border: #26344a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      background: #0b1221;
+    }
+    .nav {
+      max-width: 1150px;
+      margin: auto;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand { font-size: 21px; font-weight: 800; }
+    .brand span { color: var(--gold); }
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 18px;
+      font-size: 14px;
+    }
+    .hero {
+      max-width: 1150px;
+      margin: auto;
+      padding: 76px 22px 56px;
+      text-align: center;
+    }
+    .tag {
+      display: inline-block;
+      color: var(--gold);
+      border: 1px solid #66512c;
+      background: #241e14;
+      padding: 6px 13px;
+      border-radius: 30px;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+    h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      line-height: 1.12;
+      margin: 22px 0 16px;
+    }
+    h1 span { color: var(--gold); }
+    .hero p {
+      max-width: 660px;
+      margin: auto;
+      color: var(--muted);
+      font-size: 17px;
+    }
+    .actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .btn {
+      display: inline-block;
+      border-radius: 9px;
+      padding: 12px 19px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .primary { background: var(--gold); color: #15120b; }
+    .secondary { border: 1px solid var(--border); color: var(--text); }
+    .section {
+      max-width: 1150px;
+      margin: auto;
+      padding: 30px 22px 65px;
+    }
+    .section-title { text-align: center; margin-bottom: 28px; }
+    .section-title h2 { font-size: 30px; margin-bottom: 5px; }
+    .section-title p { color: var(--muted); margin-top: 0; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 17px;
+    }
+    .card {
+      padding: 23px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 15px;
+      transition: transform .2s, border-color .2s;
+    }
+    .card:hover { transform: translateY(-3px); border-color: #927641; }
+    .icon { font-size: 27px; }
+    .card h3 { margin: 12px 0 7px; }
+    .card p { color: var(--muted); font-size: 14px; margin-bottom: 0; }
+    .status {
+      max-width: 1106px;
+      margin: 0 auto 50px;
+      padding: 18px 22px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--muted);
+      background: #0d1524;
+    }
+    .status strong { color: var(--gold); }
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 25px 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .nav { padding: 15px; }
+      .nav a { margin-left: 9px; font-size: 12px; }
+      .hero { padding-top: 55px; }
+      .status { margin-left: 15px; margin-right: 15px; }
+    }
+    @media (max-width: 480px) {
+      .grid { grid-template-columns: 1fr; }
+      .brand { font-size: 18px; }
+      .nav a { margin-left: 7px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <div class="brand">FOREX <span>GOLD</span> TOOLS</div>
+      <div>
+        <a href="#tools">Tools</a>
+        <a href="#journal">Journal</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <span class="tag">YOUR TRADING TOOLKIT</span>
+      <h1>Trade Smarter.<br><span>Manage Risk Better.</span></h1>
+      <p>
+        Essential trading calculators, risk management tools and a personal
+        trading journal — designed for Forex, Gold, Silver and Oil traders.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="#tools">Explore Trading Tools ↗</a>
+        <a class="btn secondary" href="#journal">Trading Journal</a>
+      </div>
+    </section>
+
+    <section class="section" id="tools">
+      <div class="section-title">
+        <h2>Trading Toolkit</h2>
+        <p>Everything you need to plan a trade more carefully.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <div class="icon">🧮</div>
+          <h3>Lot Size Calculator</h3>
+          <p>Plan position size using account balance, risk and stop-loss distance.</p>
+        </article>
+        <article class="card">
+          <div class="icon">🎯</div>
+          <h3>Risk / Reward</h3>
+          <p>Compare potential risk and reward before entering a trade.</p>
+        </article>
+        <article class="card">
+          <div class="icon">🥇</div>
+          <h3>Gold Calculator</h3>
+          <p>Tools planned for XAUUSD trade planning and risk estimation.</p>
+        </article>
+        <article class="card">
+          <div class="icon">💱</div>
+          <h3>Forex Calculator</h3>
+          <p>Plan trades across major currency pairs.</p>
+        </article>
+        <article class="card">
+          <div class="icon">📊</div>
+          <h3>Silver & Oil</h3>
+          <p>Commodity trade-planning tools, with broker specifications considered.</p>
+        </article>
+        <article class="card" id="journal">
+          <div class="icon">📔</div>
+          <h3>Trading Journal</h3>
+          <p>A cloud journal for trade records, performance tracking and strategy notes.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="status">
+      <strong>Coming in stages:</strong> Interactive calculators, secure account login,
+      cloud journal, market news and economic calendar.
+    </div>
+  </main>
+
+  <footer>
+    Forex Gold Tools · Educational and planning tools only.
+    Trading involves risk. No profit is guaranteed.
+  </footer>
+</body>
+</html>
+
