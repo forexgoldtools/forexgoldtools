@@ -2,1022 +2,993 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#172536">
-  <meta name="description" content="ForexGoldTools — a clean trading calculator for Gold, Silver, Forex and Oil.">
-  <title>ForexGoldTools | Trading Calculator</title>
-  <style>
-    :root {
-      --bg: #172536;
-      --panel: #202f41;
-      --panel-light: #29394c;
-      --gold: #d7b779;
-      --gold-hover: #e6ca91;
-      --text: #f4f1e9;
-      --muted: #aab6c5;
-      --border: rgba(220, 228, 238, .11);
-      --green: #69d4a1;
-      --red: #ff9292;
-      --radius: 16px;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Inter, "Segoe UI", Arial, sans-serif;
-      line-height: 1.6;
-    }
-
-    button, input, select { font: inherit; }
-    button { cursor: pointer; }
-
-    .container {
-      width: min(1160px, calc(100% - 36px));
-      margin: auto;
-    }
-
-    header {
-      border-bottom: 1px solid var(--border);
-      background: rgba(23, 37, 54, .96);
-    }
-
-    .nav {
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 19px;
-      letter-spacing: -.5px;
-    }
-
-    .brand-icon {
-      width: 38px;
-      height: 38px;
-      display: grid;
-      place-items: center;
-      background: rgba(215, 183, 121, .12);
-      border: 1px solid rgba(215, 183, 121, .4);
-      border-radius: 12px;
-      color: var(--gold);
-      font-size: 21px;
-    }
-
-    .brand span:last-child span { color: var(--gold); }
-
-    .nav-links {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 13px;
-    }
-
-    .nav-links a:hover { color: var(--gold); }
-
-    .hero { padding: 54px 0 30px; }
-
-    .eyebrow {
-      color: var(--gold);
-      text-transform: uppercase;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 2px;
-    }
-
-    h1 {
-      margin: 10px 0 12px;
-      font-size: clamp(30px, 5vw, 48px);
-      line-height: 1.15;
-      letter-spacing: -1.5px;
-    }
-
-    h1 span { color: var(--gold); }
-
-    .hero p {
-      max-width: 650px;
-      margin: 0;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .market-strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin: 22px 0 32px;
-    }
-
-    .market-item {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      padding: 15px 17px;
-    }
-
-    .market-item .symbol {
-      color: var(--gold);
-      font-weight: 800;
-      font-size: 14px;
-    }
-
-    .market-item small {
-      display: block;
-      margin-top: 3px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .section-heading {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 16px;
-      margin: 32px 0 17px;
-    }
-
-    .section-heading h2 {
-      margin: 0;
-      font-size: 23px;
-      letter-spacing: -.5px;
-    }
-
-    .section-heading p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .calculator {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 18px 50px rgba(0, 0, 0, .12);
-    }
-
-    .calc-top {
-      padding: 23px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .calc-top h3 {
-      margin: 0;
-      font-size: 18px;
-    }
-
-    .calc-top p {
-      color: var(--muted);
-      font-size: 12px;
-      margin: 4px 0 0;
-    }
-
-    .instrument-select {
-      min-width: 180px;
-      max-width: 100%;
-    }
-
-    .tabs {
-      display: flex;
-      gap: 7px;
-      padding: 14px 20px;
-      border-bottom: 1px solid var(--border);
-      overflow-x: auto;
-    }
-
-    .tab {
-      white-space: nowrap;
-      border: 1px solid transparent;
-      color: var(--muted);
-      background: transparent;
-      padding: 10px 14px;
-      border-radius: 9px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .tab.active {
-      background: rgba(215, 183, 121, .12);
-      border-color: rgba(215, 183, 121, .3);
-      color: var(--gold);
-    }
-
-    .tab:hover { color: var(--gold); }
-
-    .calc-content {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(260px, .9fr);
-    }
-
-    .form-area { padding: 25px; }
-    .result-area {
-      background: rgba(12, 24, 38, .24);
-      border-left: 1px solid var(--border);
-      padding: 25px;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 17px;
-    }
-
-    .field { min-width: 0; }
-    .field.full { grid-column: 1 / -1; }
-
-    label {
-      display: block;
-      margin-bottom: 7px;
-      color: #d9e0e8;
-      font-size: 12px;
-      font-weight: 650;
-    }
-
-    input, select {
-      width: 100%;
-      min-width: 0;
-      color: var(--text);
-      background: #172536;
-      border: 1px solid #3b4b5e;
-      border-radius: 9px;
-      padding: 11px 12px;
-      outline: none;
-    }
-
-    input:focus, select:focus {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(215, 183, 121, .1);
-    }
-
-    input::placeholder { color: #758496; }
-
-    select option { background: #202f41; }
-
-    .hint {
-      display: block;
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 10px;
-      line-height: 1.5;
-    }
-
-    .result-title {
-      margin: 0 0 15px;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1.4px;
-      text-transform: uppercase;
-    }
-
-    .main-result {
-      background: rgba(215, 183, 121, .08);
-      border: 1px solid rgba(215, 183, 121, .24);
-      padding: 19px;
-      border-radius: 13px;
-      margin-bottom: 13px;
-    }
-
-    .main-result small {
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .main-result strong {
-      display: block;
-      margin-top: 5px;
-      font-size: clamp(27px, 3vw, 35px);
-      line-height: 1.25;
-      color: var(--gold);
-      overflow-wrap: anywhere;
-    }
-
-    .result-list { display: grid; gap: 0; }
-
-    .result-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 12px;
-    }
-
-    .result-row span { color: var(--muted); }
-    .result-row strong { text-align: right; overflow-wrap: anywhere; }
-
-    .positive { color: var(--green) !important; }
-    .negative { color: var(--red) !important; }
-
-    .note {
-      margin-top: 16px;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.65;
-    }
-
-    .actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
-
-    .btn {
-      border-radius: 9px;
-      padding: 11px 16px;
-      border: 1px solid transparent;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .btn-primary {
-      color: #182433;
-      background: var(--gold);
-    }
-
-    .btn-primary:hover { background: var(--gold-hover); }
-
-    .btn-secondary {
-      color: var(--text);
-      background: transparent;
-      border-color: #46576b;
-    }
-
-    .btn-secondary:hover { border-color: var(--gold); }
-
-    .spec-note {
-      margin-top: 16px;
-      padding: 13px 15px;
-      background: rgba(215, 183, 121, .07);
-      border: 1px solid rgba(215, 183, 121, .17);
-      border-radius: 11px;
-      color: #d7d0c1;
-      font-size: 11px;
-    }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 13px;
-      margin: 19px 0 50px;
-    }
-
-    .feature {
-      border: 1px solid var(--border);
-      background: var(--panel);
-      border-radius: 13px;
-      padding: 18px;
-    }
-
-    .feature-icon {
-      color: var(--gold);
-      font-size: 20px;
-    }
-
-    .feature h3 {
-      margin: 8px 0 5px;
-      font-size: 13px;
-    }
-
-    .feature p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.6;
-    }
-
-    .disclaimer {
-      margin: 0 0 36px;
-      padding: 16px 18px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px 0;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .hidden { display: none !important; }
-
-    @media (max-width: 760px) {
-      .nav { padding: 14px 0; align-items: flex-start; flex-direction: column; }
-      .nav-links { gap: 16px; }
-      .hero { padding-top: 35px; }
-      .market-strip { grid-template-columns: repeat(2, 1fr); }
-      .calc-content { grid-template-columns: 1fr; }
-      .result-area { border-left: 0; border-top: 1px solid var(--border); }
-      .features { grid-template-columns: repeat(2, 1fr); }
-      .section-heading { align-items: flex-start; flex-direction: column; }
-    }
-
-    @media (max-width: 430px) {
-      .container { width: calc(100% - 24px); }
-      .form-grid { grid-template-columns: 1fr; }
-      .field.full { grid-column: auto; }
-      .form-area, .result-area { padding: 17px; }
-      .calc-top { padding: 18px; }
-      .tabs { padding: 12px; }
-      .features { grid-template-columns: 1fr 1fr; }
-      .feature { padding: 13px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#172536">
+<meta name="description" content="ForexGoldTools — trading risk, position size, pip value, risk reward and stop loss take profit calculator.">
+<title>ForexGoldTools | Trading Calculator</title>
+
+<style>
+:root {
+  --bg: #172536;
+  --panel: #202f41;
+  --panel2: #26384b;
+  --border: #35475a;
+  --gold: #d7b779;
+  --gold-light: #f0d9a7;
+  --text: #edf2f7;
+  --muted: #9baabd;
+  --green: #63d6a0;
+  --red: #ff8585;
+  --blue: #91bfff;
+  --radius: 16px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at top left, #253a50 0, transparent 42%),
+    var(--bg);
+  color: var(--text);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+.container { width: min(1180px, 92%); margin: auto; }
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(23,37,54,.94);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.nav {
+  min-height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-mark {
+  display: grid; place-items: center;
+  width: 43px; height: 43px;
+  background: linear-gradient(145deg, var(--gold-light), var(--gold));
+  color: #182536;
+  border-radius: 13px;
+  font-weight: 900; font-size: 20px;
+}
+.brand-name { font-size: 18px; font-weight: 800; letter-spacing: -.5px; }
+.brand-name span { color: var(--gold); }
+.brand-sub { font-size: 11px; color: var(--muted); }
+.nav-right { display: flex; align-items: center; gap: 12px; }
+.status {
+  color: var(--green); font-size: 12px;
+  border: 1px solid #3d685a;
+  border-radius: 30px; padding: 6px 10px;
+}
+.menu-btn {
+  background: transparent; color: var(--text);
+  border: 1px solid var(--border); border-radius: 10px;
+  padding: 9px 12px;
+}
+
+.hero { padding: 48px 0 28px; }
+.eyebrow {
+  color: var(--gold); text-transform: uppercase;
+  letter-spacing: 2px; font-size: 11px; font-weight: 800;
+}
+.hero h1 {
+  font-size: clamp(29px, 5vw, 48px);
+  line-height: 1.13; letter-spacing: -1.4px;
+  margin: 12px 0;
+}
+.hero h1 span { color: var(--gold); }
+.hero p { color: var(--muted); max-width: 670px; margin: 0; }
+.hero-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap;
+}
+.hero-note { color: var(--muted); font-size: 12px; }
+
+.market-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 12px; margin: 24px 0 30px;
+}
+.market-card {
+  background: linear-gradient(145deg, #26394d, #1e2d3e);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 17px;
+  cursor: pointer; transition: .2s;
+}
+.market-card:hover, .market-card.active {
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+.market-symbol { font-weight: 800; font-size: 15px; }
+.market-desc { color: var(--muted); font-size: 11px; margin-top: 3px; }
+.market-tag {
+  display: inline-block; color: var(--gold);
+  font-size: 10px; margin-top: 10px;
+  border: 1px solid #655a43; border-radius: 20px; padding: 3px 8px;
+}
+
+.section-heading {
+  display: flex; justify-content: space-between;
+  align-items: end; gap: 16px; flex-wrap: wrap;
+  margin: 32px 0 16px;
+}
+.section-heading h2 { font-size: 23px; margin: 0; letter-spacing: -.5px; }
+.section-heading p { color: var(--muted); margin: 4px 0 0; font-size: 12px; }
+
+.workspace {
+  display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(280px, .85fr);
+  gap: 18px; align-items: start;
+}
+.panel {
+  background: rgba(32,47,65,.94);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.panel-head {
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+}
+.panel-head h3 { margin: 0; font-size: 16px; }
+.panel-head p { color: var(--muted); margin: 3px 0 0; font-size: 12px; }
+.panel-body { padding: 22px; }
+
+.tabs {
+  display: flex; gap: 7px; overflow-x: auto;
+  padding: 6px; background: #182738;
+  border: 1px solid var(--border); border-radius: 13px;
+  margin-bottom: 20px;
+}
+.tab {
+  flex: 1; min-width: max-content;
+  padding: 11px 13px; border: 0; border-radius: 9px;
+  background: transparent; color: var(--muted); font-weight: 700;
+}
+.tab.active { background: var(--gold); color: #182536; }
+.calculator { display: none; }
+.calculator.active { display: block; }
+
+.form-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 17px;
+}
+.field { min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+.field label {
+  display: block; color: #c4ceda; font-size: 12px;
+  font-weight: 650; margin-bottom: 7px;
+}
+.field input, .field select {
+  width: 100%; min-width: 0;
+  background: #172536; color: var(--text);
+  border: 1px solid #405268; border-radius: 10px;
+  padding: 12px; outline: none;
+}
+.field input:focus, .field select:focus { border-color: var(--gold); }
+.field small { display: block; color: var(--muted); font-size: 11px; margin-top: 5px; }
+.input-wrap { position: relative; }
+.input-wrap input { padding-right: 54px; }
+.input-unit {
+  position: absolute; right: 12px; top: 50%;
+  transform: translateY(-50%); color: var(--muted); font-size: 11px;
+  pointer-events: none;
+}
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+.btn {
+  border: 1px solid transparent; border-radius: 10px;
+  padding: 11px 16px; font-weight: 800; transition: .2s;
+}
+.btn-primary { background: var(--gold); color: #192637; }
+.btn-primary:hover { background: var(--gold-light); }
+.btn-secondary { background: #293c50; color: var(--text); border-color: #405268; }
+.btn-secondary:hover { border-color: var(--gold); }
+.btn-small { padding: 7px 10px; font-size: 11px; }
+
+.result-box {
+  margin-top: 20px; padding: 18px;
+  background: #182738; border: 1px solid var(--border);
+  border-radius: 13px;
+}
+.result-top {
+  display: flex; justify-content: space-between; gap: 12px;
+  align-items: center; flex-wrap: wrap;
+}
+.result-label { color: var(--muted); font-size: 12px; }
+.result-value {
+  color: var(--gold-light); font-size: clamp(25px, 4vw, 34px);
+  line-height: 1.25; font-weight: 850; overflow-wrap: anywhere;
+}
+.result-sub { color: var(--muted); font-size: 12px; margin-top: 5px; }
+.result-grid {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px; margin-top: 15px;
+}
+.metric {
+  padding: 13px; border: 1px solid var(--border);
+  border-radius: 10px; background: #202f41; min-width: 0;
+}
+.metric span { display: block; color: var(--muted); font-size: 11px; }
+.metric strong { display: block; margin-top: 4px; font-size: 16px; overflow-wrap: anywhere; }
+.positive { color: var(--green) !important; }
+.negative { color: var(--red) !important; }
+.warning {
+  margin-top: 14px; padding: 11px 13px;
+  border-radius: 9px; border: 1px solid #66583d;
+  color: #e9d7ae; background: #302f2a; font-size: 12px;
+}
+.error { color: var(--red); }
+.hidden { display: none !important; }
+
+.side-panel { display: grid; gap: 16px; }
+.side-card { padding: 20px; }
+.side-title { font-size: 14px; font-weight: 800; margin: 0 0 15px; }
+.quick-stat {
+  display: flex; justify-content: space-between; gap: 12px;
+  border-bottom: 1px solid var(--border); padding: 11px 0;
+}
+.quick-stat:last-child { border-bottom: 0; }
+.quick-stat span { color: var(--muted); font-size: 12px; }
+.quick-stat strong { text-align: right; overflow-wrap: anywhere; }
+.guide-list { display: grid; gap: 14px; }
+.guide-item { display: flex; align-items: flex-start; gap: 11px; }
+.guide-icon {
+  flex: 0 0 32px; height: 32px; display: grid; place-items: center;
+  border: 1px solid #655a43; border-radius: 9px; color: var(--gold);
+}
+.guide-item strong { display: block; font-size: 12px; }
+.guide-item p { margin: 3px 0 0; color: var(--muted); font-size: 11px; }
+.disclaimer {
+  margin: 24px 0; padding: 16px;
+  background: #1c2b3c; border: 1px solid var(--border);
+  border-radius: 12px; color: var(--muted); font-size: 12px;
+}
+footer { margin-top: 45px; border-top: 1px solid var(--border); padding: 25px 0; }
+.footer-row { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+footer p { margin: 0; color: var(--muted); font-size: 12px; }
+
+@media (max-width: 820px) {
+  .workspace { grid-template-columns: 1fr; }
+  .market-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero { padding-top: 34px; }
+}
+@media (max-width: 480px) {
+  .container { width: 94%; }
+  .nav { min-height: 65px; }
+  .brand-name { font-size: 15px; }
+  .brand-sub { font-size: 10px; }
+  .brand-mark { width: 38px; height: 38px; }
+  .status { display: none; }
+  .hero h1 { font-size: 32px; }
+  .panel-body, .panel-head { padding: 16px; }
+  .form-grid { gap: 13px; }
+  .field input, .field select { padding: 11px 9px; }
+  .tabs { gap: 4px; }
+  .tab { padding: 10px; font-size: 11px; }
+  .result-grid { gap: 8px; }
+  .metric { padding: 10px; }
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <div class="container nav">
-      <a class="brand" href="#" aria-label="ForexGoldTools home">
-        <span class="brand-icon">↗</span>
-        <span>Forex<span>Gold</span>Tools</span>
-      </a>
-      <nav class="nav-links" aria-label="Main navigation">
-        <a href="#calculator">Calculator</a>
-        <a href="#tools">Tools</a>
-        <a href="#disclaimer">Risk Disclaimer</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="container">
-    <section class="hero">
-      <div class="eyebrow">Your Trading Companion</div>
-      <h1>Plan every trade.<br><span>Trade with clarity.</span></h1>
-      <p>A simple, professional toolkit to calculate position size, risk-to-reward, pip value and stop-loss or take-profit levels.</p>
-    </section>
-
-    <section class="market-strip" aria-label="Supported markets">
-      <div class="market-item"><div class="symbol">XAUUSD</div><small>Gold</small></div>
-      <div class="market-item"><div class="symbol">XAGUSD</div><small>Silver</small></div>
-      <div class="market-item"><div class="symbol">FOREX</div><small>Currency pairs</small></div>
-      <div class="market-item"><div class="symbol">OIL</div><small>Oil / Energy</small></div>
-    </section>
-
-    <section id="calculator">
-      <div class="section-heading">
-        <div>
-          <h2>Trading Calculator</h2>
-          <p>Choose a tool, enter your trade details and calculate.</p>
-        </div>
+<header>
+  <div class="container nav">
+    <a class="brand" href="#" aria-label="ForexGoldTools home">
+      <div class="brand-mark">FG</div>
+      <div>
+        <div class="brand-name">Forex<span>Gold</span>Tools</div>
+        <div class="brand-sub">SMART TRADING WORKSPACE</div>
       </div>
+    </a>
+    <div class="nav-right">
+      <span class="status">● Calculators Ready</span>
+      <a href="#calculators" class="menu-btn">Open Tools ↗</a>
+    </div>
+  </div>
+</header>
 
-      <div class="calculator">
-        <div class="calc-top">
+<main class="container">
+  <section class="hero">
+    <div class="eyebrow">Trading Toolkit · All in One</div>
+    <div class="hero-row">
+      <div>
+        <h1>Plan Your Trade.<br><span>Manage Your Risk.</span></h1>
+        <p>Calculate position size, risk-to-reward, pip value and SL/TP levels from one simple workspace.</p>
+      </div>
+      <div class="hero-note">Free tools · No sign-up required</div>
+    </div>
+  </section>
+
+  <section aria-label="Select instrument">
+    <div class="market-grid">
+      <button class="market-card active" data-market="XAUUSD" type="button">
+        <div class="market-symbol">XAUUSD</div>
+        <div class="market-desc">Gold / US Dollar</div>
+        <span class="market-tag">PRECIOUS METAL</span>
+      </button>
+      <button class="market-card" data-market="XAGUSD" type="button">
+        <div class="market-symbol">XAGUSD</div>
+        <div class="market-desc">Silver / US Dollar</div>
+        <span class="market-tag">PRECIOUS METAL</span>
+      </button>
+      <button class="market-card" data-market="FOREX" type="button">
+        <div class="market-symbol">FOREX</div>
+        <div class="market-desc">Currency Pairs</div>
+        <span class="market-tag">FX MARKET</span>
+      </button>
+      <button class="market-card" data-market="OIL" type="button">
+        <div class="market-symbol">OIL</div>
+        <div class="market-desc">Crude Oil / CFD</div>
+        <span class="market-tag">ENERGY</span>
+      </button>
+    </div>
+  </section>
+
+  <section id="calculators">
+    <div class="section-heading">
+      <div>
+        <h2>Trading Calculator</h2>
+        <p>Enter your trade details to calculate your plan.</p>
+      </div>
+      <button class="btn btn-secondary btn-small" id="resetAll" type="button">Reset Inputs</button>
+    </div>
+
+    <div class="workspace">
+      <section class="panel">
+        <div class="panel-head">
           <div>
-            <h3>Trade Planning Workspace</h3>
-            <p>Calculations are estimates based on the values you enter.</p>
+            <h3 id="activeCalcTitle">Position Size Calculator</h3>
+            <p>Choose a tool and calculate your trade.</p>
           </div>
-          <div class="instrument-select">
-            <label for="instrument">Instrument</label>
-            <select id="instrument">
-              <option value="XAUUSD">XAUUSD — Gold</option>
-              <option value="XAGUSD">XAGUSD — Silver</option>
-              <option value="FOREX">Forex Pair</option>
-              <option value="OIL">Oil</option>
-            </select>
+          <span class="market-tag" id="selectedMarketLabel">XAUUSD</span>
+        </div>
+        <div class="panel-body">
+          <div class="tabs" role="tablist" aria-label="Calculator type">
+            <button class="tab active" data-tab="position" role="tab" aria-selected="true" type="button">Position Size</button>
+            <button class="tab" data-tab="rr" role="tab" aria-selected="false" type="button">Risk / Reward</button>
+            <button class="tab" data-tab="pip" role="tab" aria-selected="false" type="button">Pip / Tick</button>
+            <button class="tab" data-tab="sltp" role="tab" aria-selected="false" type="button">SL / TP Planner</button>
           </div>
-        </div>
 
-        <div class="tabs" role="tablist" aria-label="Calculator types">
-          <button class="tab active" data-tab="position" role="tab" aria-selected="true">Position Size</button>
-          <button class="tab" data-tab="rr" role="tab" aria-selected="false">Risk / Reward</button>
-          <button class="tab" data-tab="pip" role="tab" aria-selected="false">Pip / Tick Value</button>
-          <button class="tab" data-tab="sltp" role="tab" aria-selected="false">SL / TP Planner</button>
-        </div>
-
-        <section class="calc-content" id="panel-position">
-          <div class="form-area">
+          <!-- POSITION SIZE -->
+          <div class="calculator active" id="calc-position">
             <div class="form-grid">
               <div class="field">
-                <label for="balance">Account balance</label>
-                <input id="balance" type="number" min="0" step="any" value="10000">
+                <label for="psBalance">Account Balance ($)</label>
+                <input id="psBalance" type="number" min="0.01" step="any" value="1000">
               </div>
               <div class="field">
-                <label for="riskPercent">Risk per trade (%)</label>
-                <input id="riskPercent" type="number" min="0" max="100" step="any" value="1">
+                <label for="psRisk">Risk (%)</label>
+                <input id="psRisk" type="number" min="0.01" max="100" step="any" value="1">
+                <small>Risk per trade, not guaranteed loss.</small>
               </div>
               <div class="field">
-                <label for="entry">Entry price</label>
-                <input id="entry" type="number" min="0" step="any" value="2650">
+                <label for="psEntry">Entry Price</label>
+                <input id="psEntry" type="number" min="0.00000001" step="any" value="2650">
               </div>
               <div class="field">
-                <label for="stop">Stop-loss price</label>
-                <input id="stop" type="number" min="0" step="any" value="2645">
+                <label for="psStop">Stop Loss Price</label>
+                <input id="psStop" type="number" min="0.00000001" step="any" value="2645">
               </div>
               <div class="field">
-                <label for="tickSize">Tick size</label>
-                <input id="tickSize" type="number" min="0.00000001" step="any" value="0.01">
-                <small class="hint">Minimum price movement for your broker.</small>
+                <label for="psTickSize">Price Tick Size</label>
+                <input id="psTickSize" type="number" min="0.00000001" step="any" value="0.01">
+                <small>Check your broker's symbol specification.</small>
               </div>
               <div class="field">
-                <label for="tickValue">Tick value per 1.00 lot</label>
-                <input id="tickValue" type="number" min="0.00000001" step="any" value="1">
-                <small class="hint">In your account currency, for one lot.</small>
+                <label for="psTickValue">Tick Value per 1 Lot ($)</label>
+                <input id="psTickValue" type="number" min="0.00000001" step="any" value="1">
+                <small>Account-currency value of one tick for 1 lot.</small>
               </div>
               <div class="field">
-                <label for="lotStep">Lot step</label>
-                <input id="lotStep" type="number" min="0.00000001" step="any" value="0.01">
+                <label for="psLotStep">Lot Step</label>
+                <input id="psLotStep" type="number" min="0.00000001" step="any" value="0.01">
               </div>
               <div class="field">
-                <label for="minLot">Minimum lot</label>
-                <input id="minLot" type="number" min="0" step="any" value="0.01">
+                <label for="psMinLot">Minimum Lot</label>
+                <input id="psMinLot" type="number" min="0.00000001" step="any" value="0.01">
               </div>
             </div>
             <div class="actions">
-              <button class="btn btn-primary" id="calcPosition">Calculate position</button>
-              <button class="btn btn-secondary" data-reset="position">Reset</button>
+              <button class="btn btn-primary" id="calcPositionBtn" type="button">Calculate Position Size</button>
+            </div>
+            <div class="result-box" id="positionResult" aria-live="polite">
+              <div class="result-label">Recommended position size</div>
+              <div class="result-value">— lots</div>
+              <div class="result-sub">Enter valid trade details and calculate.</div>
             </div>
           </div>
-          <aside class="result-area" aria-live="polite">
-            <p class="result-title">Position summary</p>
-            <div class="main-result">
-              <small>Suggested lot size (rounded down)</small>
-              <strong id="posLot">0.00 lots</strong>
-            </div>
-            <div class="result-list">
-              <div class="result-row"><span>Risk budget</span><strong id="posRisk">—</strong></div>
-              <div class="result-row"><span>Stop distance</span><strong id="posDistance">—</strong></div>
-              <div class="result-row"><span>Estimated loss at SL</span><strong id="posLoss">—</strong></div>
-              <div class="result-row"><span>Risk used</span><strong id="posUsed">—</strong></div>
-            </div>
-            <p class="note" id="posNote">Enter your broker's correct tick size and tick value. Margin, fees, spread and slippage are not included.</p>
-          </aside>
-        </section>
 
-        <section class="calc-content hidden" id="panel-rr">
-          <div class="form-area">
+          <!-- RISK REWARD -->
+          <div class="calculator" id="calc-rr">
             <div class="form-grid">
               <div class="field">
-                <label for="rrEntry">Entry price</label>
-                <input id="rrEntry" type="number" min="0" step="any" value="2650">
-              </div>
-              <div class="field">
-                <label for="rrStop">Stop-loss price</label>
-                <input id="rrStop" type="number" min="0" step="any" value="2645">
-              </div>
-              <div class="field">
-                <label for="rrTarget">Take-profit price</label>
-                <input id="rrTarget" type="number" min="0" step="any" value="2660">
-              </div>
-              <div class="field">
-                <label for="rrDirection">Trade direction</label>
+                <label for="rrDirection">Trade Direction</label>
                 <select id="rrDirection">
-                  <option value="buy">Buy / Long</option>
-                  <option value="sell">Sell / Short</option>
+                  <option value="buy">BUY / LONG</option>
+                  <option value="sell">SELL / SHORT</option>
                 </select>
               </div>
+              <div class="field">
+                <label for="rrRiskMoney">Risk Amount ($) — optional</label>
+                <input id="rrRiskMoney" type="number" min="0" step="any" value="10">
+              </div>
+              <div class="field">
+                <label for="rrEntry">Entry Price</label>
+                <input id="rrEntry" type="number" min="0.00000001" step="any" value="2650">
+              </div>
+              <div class="field">
+                <label for="rrStop">Stop Loss Price</label>
+                <input id="rrStop" type="number" min="0.00000001" step="any" value="2645">
+              </div>
               <div class="field full">
-                <label for="rrRiskMoney">Optional risk amount (account currency)</label>
-                <input id="rrRiskMoney" type="number" min="0" step="any" placeholder="e.g. 100">
-                <small class="hint">If entered, estimated reward is calculated from this risk amount.</small>
+                <label for="rrTarget">Take Profit Price</label>
+                <input id="rrTarget" type="number" min="0.00000001" step="any" value="2660">
               </div>
             </div>
             <div class="actions">
-              <button class="btn btn-primary" id="calcRR">Calculate R:R</button>
-              <button class="btn btn-secondary" data-reset="rr">Reset</button>
+              <button class="btn btn-primary" id="calcRRBtn" type="button">Calculate Risk / Reward</button>
+            </div>
+            <div class="result-box" id="rrResult" aria-live="polite">
+              <div class="result-label">Risk-to-reward ratio</div>
+              <div class="result-value">—</div>
+              <div class="result-sub">Enter entry, stop loss and take profit.</div>
             </div>
           </div>
-          <aside class="result-area" aria-live="polite">
-            <p class="result-title">Risk / reward summary</p>
-            <div class="main-result">
-              <small>Risk-to-reward ratio</small>
-              <strong id="rrRatio">—</strong>
-            </div>
-            <div class="result-list">
-              <div class="result-row"><span>Risk distance</span><strong id="rrRiskDist">—</strong></div>
-              <div class="result-row"><span>Reward distance</span><strong id="rrRewardDist">—</strong></div>
-              <div class="result-row"><span>Potential reward</span><strong id="rrRewardMoney">—</strong></div>
-              <div class="result-row"><span>Direction check</span><strong id="rrCheck">—</strong></div>
-            </div>
-            <p class="note">The ratio compares price distances. It does not predict whether a trade will win.</p>
-          </aside>
-        </section>
 
-        <section class="calc-content hidden" id="panel-pip">
-          <div class="form-area">
+          <!-- PIP / TICK VALUE -->
+          <div class="calculator" id="calc-pip">
             <div class="form-grid">
               <div class="field">
-                <label for="pipLot">Lot size</label>
-                <input id="pipLot" type="number" min="0" step="any" value="0.1">
+                <label for="pipLots">Position Size (Lots)</label>
+                <input id="pipLots" type="number" min="0.00000001" step="any" value="0.10">
               </div>
               <div class="field">
-                <label for="pipCount">Number of pips / ticks</label>
-                <input id="pipCount" type="number" min="0" step="any" value="10">
+                <label for="pipCount">Number of Ticks / Pips</label>
+                <input id="pipCount" type="number" min="0" step="any" value="100">
               </div>
               <div class="field">
-                <label for="pipSize">Pip / tick size</label>
+                <label for="pipSize">Tick / Pip Size</label>
                 <input id="pipSize" type="number" min="0.00000001" step="any" value="0.01">
               </div>
               <div class="field">
-                <label for="pipValue">Value per pip / tick per 1.00 lot</label>
-                <input id="pipValue" type="number" min="0" step="any" value="1">
+                <label for="pipValue">Value per Tick / Pip for 1 Lot ($)</label>
+                <input id="pipValue" type="number" min="0.00000001" step="any" value="1">
               </div>
               <div class="field full">
-                <label for="pipMove">Optional price movement</label>
-                <input id="pipMove" type="number" min="0" step="any" placeholder="Optional: e.g. 0.50">
-                <small class="hint">If entered, calculates how many pips/ticks the price movement represents.</small>
+                <label for="pipMove">Price Movement (optional)</label>
+                <input id="pipMove" type="number" min="0" step="any" placeholder="e.g. 1.50">
+                <small>If entered, the tool calculates ticks from price movement ÷ tick size.</small>
               </div>
             </div>
             <div class="actions">
-              <button class="btn btn-primary" id="calcPip">Calculate value</button>
-              <button class="btn btn-secondary" data-reset="pip">Reset</button>
+              <button class="btn btn-primary" id="calcPipBtn" type="button">Calculate Pip / Tick Value</button>
+            </div>
+            <div class="result-box" id="pipResult" aria-live="polite">
+              <div class="result-label">Estimated value</div>
+              <div class="result-value">—</div>
+              <div class="result-sub">Enter your broker's tick or pip specifications.</div>
             </div>
           </div>
-          <aside class="result-area" aria-live="polite">
-            <p class="result-title">Pip / tick summary</p>
-            <div class="main-result">
-              <small>Value for entered lot size</small>
-              <strong id="pipResult">—</strong>
-            </div>
-            <div class="result-list">
-              <div class="result-row"><span>Value per pip / tick</span><strong id="pipOne">—</strong></div>
-              <div class="result-row"><span>Number of pips / ticks</span><strong id="pipTotal">—</strong></div>
-              <div class="result-row"><span>Entered price movement</span><strong id="pipMovement">—</strong></div>
-            </div>
-            <p class="note">For Forex, pip size and pip value depend on the currency pair and account currency. Use verified broker values.</p>
-          </aside>
-        </section>
 
-        <section class="calc-content hidden" id="panel-sltp">
-          <div class="form-area">
+          <!-- SL / TP PLANNER -->
+          <div class="calculator" id="calc-sltp">
             <div class="form-grid">
               <div class="field">
-                <label for="planEntry">Entry price</label>
-                <input id="planEntry" type="number" min="0" step="any" value="2650">
-              </div>
-              <div class="field">
-                <label for="planDirection">Trade direction</label>
-                <select id="planDirection">
-                  <option value="buy">Buy / Long</option>
-                  <option value="sell">Sell / Short</option>
+                <label for="slDirection">Trade Direction</label>
+                <select id="slDirection">
+                  <option value="buy">BUY / LONG</option>
+                  <option value="sell">SELL / SHORT</option>
                 </select>
               </div>
               <div class="field">
-                <label for="planStopDistance">Stop distance (price units)</label>
-                <input id="planStopDistance" type="number" min="0" step="any" value="5">
+                <label for="slEntry">Entry Price</label>
+                <input id="slEntry" type="number" min="0.00000001" step="any" value="2650">
               </div>
               <div class="field">
-                <label for="planRR">Target R:R</label>
-                <input id="planRR" type="number" min="0.01" step="any" value="2">
+                <label for="slDistance">Stop Loss Distance (Price Units)</label>
+                <input id="slDistance" type="number" min="0.00000001" step="any" value="5">
+              </div>
+              <div class="field">
+                <label for="slRR">Target Risk / Reward</label>
+                <select id="slRR">
+                  <option value="1">1 : 1</option>
+                  <option value="1.5">1 : 1.5</option>
+                  <option value="2" selected>1 : 2</option>
+                  <option value="3">1 : 3</option>
+                  <option value="4">1 : 4</option>
+                  <option value="5">1 : 5</option>
+                </select>
+              </div>
+              <div class="field full">
+                <label for="slDecimals">Price Decimal Places</label>
+                <select id="slDecimals">
+                  <option value="2" selected>2 decimal places</option>
+                  <option value="3">3 decimal places</option>
+                  <option value="4">4 decimal places</option>
+                  <option value="5">5 decimal places</option>
+                </select>
               </div>
             </div>
             <div class="actions">
-              <button class="btn btn-primary" id="calcSLTP">Plan SL / TP</button>
-              <button class="btn btn-secondary" data-reset="sltp">Reset</button>
+              <button class="btn btn-primary" id="calcSLTPBtn" type="button">Calculate SL / TP</button>
+              <button class="btn btn-secondary" id="copySLTPBtn" type="button">Copy Levels</button>
+            </div>
+            <div class="result-box" id="sltpResult" aria-live="polite">
+              <div class="result-label">Trade levels</div>
+              <div class="result-value">—</div>
+              <div class="result-sub">Calculate to see stop loss and take profit.</div>
             </div>
           </div>
-          <aside class="result-area" aria-live="polite">
-            <p class="result-title">Trade levels</p>
-            <div class="main-result">
-              <small>Stop-loss price</small>
-              <strong id="planSL">—</strong>
-            </div>
-            <div class="result-list">
-              <div class="result-row"><span>Entry price</span><strong id="planEntryOut">—</strong></div>
-              <div class="result-row"><span>Stop-loss</span><strong id="planSLOut">—</strong></div>
-              <div class="result-row"><span>Take-profit</span><strong id="planTP">—</strong></div>
-              <div class="result-row"><span>Stop distance</span><strong id="planStopOut">—</strong></div>
-              <div class="result-row"><span>Target distance</span><strong id="planTargetOut">—</strong></div>
-            </div>
-            <div class="actions">
-              <button class="btn btn-secondary" id="copyLevels">Copy levels</button>
-            </div>
-            <p class="note" id="copyMessage">Levels are calculated from the entry, stop distance and target R:R you enter.</p>
-          </aside>
-        </section>
-      </div>
-
-      <div class="spec-note">
-        <strong>Important:</strong> The initial Gold, Silver, Forex and Oil values are examples, not live market data or guaranteed broker specifications. This website does not connect to your broker or place trades.
-      </div>
-    </section>
-
-    <section id="tools">
-      <div class="section-heading">
-        <div>
-          <h2>Built for better trade planning</h2>
-          <p>Essential tools, presented without unnecessary clutter.</p>
         </div>
-      </div>
-      <div class="features">
-        <article class="feature">
-          <div class="feature-icon">◈</div>
-          <h3>Position Size</h3>
-          <p>Estimate lot size from your balance, risk and stop-loss distance.</p>
-        </article>
-        <article class="feature">
-          <div class="feature-icon">↗</div>
-          <h3>Risk / Reward</h3>
-          <p>Compare potential reward with the risk defined by your trade levels.</p>
-        </article>
-        <article class="feature">
-          <div class="feature-icon">⌁</div>
-          <h3>Pip / Tick Value</h3>
-          <p>Estimate pip or tick value using the specifications you provide.</p>
-        </article>
-        <article class="feature">
-          <div class="feature-icon">◎</div>
-          <h3>SL / TP Planner</h3>
-          <p>Calculate potential stop-loss and take-profit price levels.</p>
-        </article>
-      </div>
-    </section>
+      </section>
 
-    <section class="disclaimer" id="disclaimer">
-      <strong>Risk disclaimer:</strong> Forex, CFDs, metals and energy products involve significant risk. Calculations are estimates only and may exclude commissions, spread, slippage, currency conversion, margin and broker-specific contract rules. Verify all values in your trading platform before placing a trade. This tool is for educational purposes and is not financial advice.
-    </section>
-  </main>
+      <aside class="side-panel">
+        <section class="panel side-card">
+          <h3 class="side-title">Trade Snapshot</h3>
+          <div class="quick-stat"><span>Selected Instrument</span><strong id="snapshotMarket">XAUUSD</strong></div>
+          <div class="quick-stat"><span>Risk Setting</span><strong id="snapshotRisk">1%</strong></div>
+          <div class="quick-stat"><span>Entry Price</span><strong id="snapshotEntry">2650.00</strong></div>
+          <div class="quick-stat"><span>Stop Loss</span><strong id="snapshotStop">2645.00</strong></div>
+          <div class="quick-stat"><span>Calculator</span><strong id="snapshotTool">Position Size</strong></div>
+          <div class="warning">Presets are examples, not universal broker specifications. Confirm tick size, tick value, contract size, lot step and account currency with your broker.</div>
+        </section>
 
-  <footer>
-    <div class="container footer-inner">
-      <span>© <span id="year"></span> ForexGoldTools</span>
-      <span>Trade thoughtfully. Manage risk first.</span>
+        <section class="panel side-card">
+          <h3 class="side-title">How to Use</h3>
+          <div class="guide-list">
+            <div class="guide-item">
+              <div class="guide-icon">01</div>
+              <div><strong>Select your instrument</strong><p>Choose Gold, Silver, Forex or Oil. Verify all preset values.</p></div>
+            </div>
+            <div class="guide-item">
+              <div class="guide-icon">02</div>
+              <div><strong>Enter trade details</strong><p>Set your entry, stop loss, account balance and risk.</p></div>
+            </div>
+            <div class="guide-item">
+              <div class="guide-icon">03</div>
+              <div><strong>Calculate and verify</strong><p>Review the output and confirm the numbers in your trading platform.</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel side-card">
+          <h3 class="side-title">Risk Management</h3>
+          <div class="quick-stat"><span>Common planning example</span><strong>1% risk</strong></div>
+          <div class="quick-stat"><span>Before entering</span><strong>Check spread</strong></div>
+          <div class="quick-stat"><span>Always consider</span><strong>Slippage / fees</strong></div>
+          <p style="font-size:12px;color:var(--muted);margin-bottom:0">A calculator supports planning; it does not guarantee execution price, profit or maximum loss.</p>
+        </section>
+      </aside>
     </div>
-  </footer>
+  </section>
 
-  <script>
-    const $ = id => document.getElementById(id);
+  <div class="disclaimer">
+    <strong style="color:var(--gold-light)">Important Disclaimer:</strong>
+    This website is an educational calculator, not financial advice. Results are estimates and depend on correct broker specifications, account currency, contract size, commissions, spreads, swaps and slippage. Trading leveraged products can result in substantial losses.
+  </div>
+</main>
 
-    function num(id) {
-      return Number($(id).value);
+<footer>
+  <div class="container footer-row">
+    <div class="brand">
+      <div class="brand-mark">FG</div>
+      <div>
+        <div class="brand-name">Forex<span>Gold</span>Tools</div>
+        <div class="brand-sub">TRADE WITH A PLAN</div>
+      </div>
+    </div>
+    <p>© <span id="year"></span> ForexGoldTools. Free trading calculators.</p>
+  </div>
+</footer>
+
+<script>
+"use strict";
+
+const $ = id => document.getElementById(id);
+
+const presets = {
+  XAUUSD: { tickSize: 0.01, tickValue: 1, lotStep: 0.01, minLot: 0.01, entry: 2650 },
+  XAGUSD: { tickSize: 0.001, tickValue: 5, lotStep: 0.01, minLot: 0.01, entry: 30 },
+  FOREX:  { tickSize: 0.0001, tickValue: 10, lotStep: 0.01, minLot: 0.01, entry: 1.1 },
+  OIL:    { tickSize: 0.01, tickValue: 10, lotStep: 0.01, minLot: 0.01, entry: 75 }
+};
+
+let selectedMarket = "XAUUSD";
+let activeTab = "position";
+let lastSLTPText = "";
+
+const titles = {
+  position: "Position Size Calculator",
+  rr: "Risk / Reward Calculator",
+  pip: "Pip / Tick Value Calculator",
+  sltp: "SL / TP Planner"
+};
+
+function num(id) {
+  return Number($(id).value);
+}
+
+function validPositive(...values) {
+  return values.every(v => Number.isFinite(v) && v > 0);
+}
+
+function money(value) {
+  return "$" + Number(value).toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+}
+
+function fmt(value, decimals = 2) {
+  return Number(value).toLocaleString("en-US", {
+    minimumFractionDigits: decimals,
+    maximumFractionDigits: decimals
+  });
+}
+
+function showError(targetId, message) {
+  $(targetId).innerHTML =
+    '<div class="result-label">Please check your inputs</div>' +
+    '<div class="result-sub error">' + message + '</div>';
+}
+
+function showResult(targetId, label, value, sub, metrics = [], warning = "") {
+  const metricsHTML = metrics.map(m =>
+    '<div class="metric"><span>' + m.label + '</span><strong class="' +
+    (m.className || '') + '">' + m.value + '</strong></div>'
+  ).join("");
+
+  $(targetId).innerHTML =
+    '<div class="result-top"><div class="result-label">' + label +
+    '</div></div><div class="result-value">' + value +
+    '</div><div class="result-sub">' + sub + '</div>' +
+    (metricsHTML ? '<div class="result-grid">' + metricsHTML + '</div>' : '') +
+    (warning ? '<div class="warning">' + warning + '</div>' : '');
+}
+
+function switchTab(tab) {
+  activeTab = tab;
+
+  document.querySelectorAll(".tab").forEach(button => {
+    const active = button.dataset.tab === tab;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-selected", String(active));
+  });
+
+  document.querySelectorAll(".calculator").forEach(calc => {
+    calc.classList.toggle("active", calc.id === "calc-" + tab);
+  });
+
+  $("activeCalcTitle").textContent = titles[tab];
+  $("snapshotTool").textContent = titles[tab].replace(" Calculator", "");
+  updateSnapshot();
+}
+
+function setMarket(market) {
+  selectedMarket = market;
+  const p = presets[market];
+
+  document.querySelectorAll(".market-card").forEach(card => {
+    card.classList.toggle("active", card.dataset.market === market);
+  });
+
+  $("selectedMarketLabel").textContent = market;
+  $("snapshotMarket").textContent = market;
+
+  // These values are examples only. Verify them against your broker.
+  $("psTickSize").value = p.tickSize;
+  $("psTickValue").value = p.tickValue;
+  $("psLotStep").value = p.lotStep;
+  $("psMinLot").value = p.minLot;
+  $("psEntry").value = p.entry;
+  $("psStop").value = +(p.entry - (market === "FOREX" ? 0.005 : 5)).toFixed(5);
+
+  $("rrEntry").value = p.entry;
+  $("rrStop").value = +(p.entry - (market === "FOREX" ? 0.005 : 5)).toFixed(5);
+  $("rrTarget").value = +(p.entry + (market === "FOREX" ? 0.01 : 10)).toFixed(5);
+
+  $("pipSize").value = p.tickSize;
+  $("pipValue").value = p.tickValue;
+
+  $("slEntry").value = p.entry;
+  $("slDistance").value = market === "FOREX" ? 0.005 : 5;
+
+  updateSnapshot();
+}
+
+function updateSnapshot() {
+  $("snapshotMarket").textContent = selectedMarket;
+  $("snapshotRisk").textContent = $("psRisk").value + "%";
+  $("snapshotEntry").textContent = $("psEntry").value || "—";
+  $("snapshotStop").textContent = $("psStop").value || "—";
+  $("snapshotTool").textContent = titles[activeTab].replace(" Calculator", "");
+}
+
+function calculatePosition() {
+  const balance = num("psBalance");
+  const riskPct = num("psRisk");
+  const entry = num("psEntry");
+  const stop = num("psStop");
+  const tickSize = num("psTickSize");
+  const tickValue = num("psTickValue");
+  const step = num("psLotStep");
+  const minLot = num("psMinLot");
+
+  if (!validPositive(balance, riskPct, entry, stop, tickSize, tickValue, step, minLot)) {
+    showError("positionResult", "All fields must be positive numbers. Risk must be above 0% and no more than 100%.");
+    return;
+  }
+  if (riskPct > 100) {
+    showError("positionResult", "Risk percentage cannot exceed 100%.");
+    return;
+  }
+
+  const distance = Math.abs(entry - stop);
+  if (distance <= 0) {
+    showError("positionResult", "Entry price and stop loss must be different.");
+    return;
+  }
+
+  const ticks = distance / tickSize;
+  const riskAmount = balance * riskPct / 100;
+  const lossPerLot = ticks * tickValue;
+
+  if (!Number.isFinite(lossPerLot) || lossPerLot <= 0) {
+    showError("positionResult", "Could not calculate loss per lot. Check tick specifications.");
+    return;
+  }
+
+  const rawLots = riskAmount / lossPerLot;
+  // Round DOWN to the broker's allowed lot step.
+  const lotUnits = Math.floor((rawLots + 1e-10) / step);
+  const lots = +(lotUnits * step).toFixed(8);
+  const expectedLoss = lots * lossPerLot;
+
+  if (lots < minLot) {
+    showResult("positionResult", "Position size is below minimum", "No valid lot size",
+      "Calculated size: " + fmt(rawLots, 4) + " lots. Broker minimum: " + minLot +
+      " lots. Do not automatically increase the size because it may exceed your risk limit.",
+      [
+        { label: "Risk Budget", value: money(riskAmount) },
+        { label: "Loss per 1 Lot", value: money(lossPerLot) },
+        { label: "Raw Lot Estimate", value: fmt(rawLots, 4) },
+        { label: "Minimum Lot", value: fmt(minLot, 4) }
+      ]);
+    return;
+  }
+
+  showResult("positionResult", "Calculated position size",
+    fmt(lots, 4) + " lots",
+    "Rounded down to your specified lot step. Verify contract and account currency.",
+    [
+      { label: "Risk Budget", value: money(riskAmount) },
+      { label: "Estimated Loss at SL", value: money(expectedLoss), className: "negative" },
+      { label: "Stop Distance", value: fmt(distance, 5) },
+      { label: "Ticks to Stop", value: fmt(ticks, 2) },
+      { label: "Loss per 1 Lot", value: money(lossPerLot) },
+      { label: "Unallocated Risk", value: money(Math.max(0, riskAmount - expectedLoss)) }
+    ],
+    "This estimate excludes commissions, spread changes, slippage and conversion differences.");
+  updateSnapshot();
+}
+
+function calculateRR() {
+  const direction = $("rrDirection").value;
+  const entry = num("rrEntry");
+  const stop = num("rrStop");
+  const target = num("rrTarget");
+  const riskAmount = num("rrRiskMoney");
+
+  if (!validPositive(entry, stop, target) || !Number.isFinite(riskAmount) || riskAmount < 0) {
+    showError("rrResult", "Enter positive prices. Risk amount must be zero or greater.");
+    return;
+  }
+
+  const riskDistance = Math.abs(entry - stop);
+  const rewardDistance = Math.abs(target - entry);
+
+  if (riskDistance === 0 || rewardDistance === 0) {
+    showError("rrResult", "Entry, stop loss and target must not be the same price.");
+    return;
+  }
+
+  const correctStop = direction === "buy" ? stop < entry : stop > entry;
+  const correctTarget = direction === "buy" ? target > entry : target < entry;
+  const ratio = rewardDistance / riskDistance;
+  const potentialReward = riskAmount * ratio;
+
+  const warning = (!correctStop || !correctTarget)
+    ? "Warning: stop loss or target is on the unexpected side for the selected direction. Check your trade setup."
+    : "Price distances are calculated before fees, spread and slippage.";
+
+  showResult("rrResult", "Risk-to-reward ratio",
+    "1 : " + fmt(ratio, 2),
+    "Potential reward relative to the price risk.",
+    [
+      { label: "Risk Distance", value: fmt(riskDistance, 5) },
+      { label: "Reward Distance", value: fmt(rewardDistance, 5) },
+      { label: "Risk Amount", value: money(riskAmount) },
+      { label: "Potential Reward", value: money(potentialReward), className: "positive" }
+    ], warning);
+}
+
+function calculatePip() {
+  const lots = num("pipLots");
+  const count = num("pipCount");
+  const tickSize = num("pipSize");
+  const valuePerTick = num("pipValue");
+  const moveText = $("pipMove").value.trim();
+  const movement = moveText === "" ? null : Number(moveText);
+
+  if (!validPositive(lots, tickSize, valuePerTick) ||
+      !Number.isFinite(count) || count < 0 ||
+      (movement !== null && (!Number.isFinite(movement) || movement < 0))) {
+    showError("pipResult", "Lots, tick size and tick value must be positive. Tick count and movement cannot be negative.");
+    return;
+  }
+
+  const ticks = movement === null ? count : movement / tickSize;
+  const valuePerLot = valuePerTick;
+  const totalValue = ticks * valuePerLot * lots;
+  const priceMove = ticks * tickSize;
+
+  showResult("pipResult", "Estimated price-movement value",
+    money(totalValue),
+    "Estimated P/L magnitude for the entered movement and lot size.",
+    [
+      { label: "Position Size", value: fmt(lots, 4) + " lots" },
+      { label: "Tick / Pip Count", value: fmt(ticks, 2) },
+      { label: "Value per Tick for 1 Lot", value: money(valuePerLot) },
+      { label: "Price Movement", value: fmt(priceMove, 5) }
+    ],
+    "This tool uses the value-per-tick you entered. Forex pip value varies by pair, lot size and account currency. Confirm the unit with your broker.");
+}
+
+function calculateSLTP() {
+  const direction = $("slDirection").value;
+  const entry = num("slEntry");
+  const distance = num("slDistance");
+  const rr = num("slRR");
+  const decimals = num("slDecimals");
+
+  if (!validPositive(entry, distance, rr) ||
+      !Number.isInteger(decimals) || decimals < 0 || decimals > 8) {
+    showError("sltpResult", "Enter a positive entry, stop distance and risk/reward ratio.");
+    lastSLTPText = "";
+    return;
+  }
+
+  const sign = direction === "buy" ? 1 : -1;
+  const sl = entry - sign * distance;
+  const tp = entry + sign * distance * rr;
+  const dp = Math.min(8, decimals);
+
+  if (sl <= 0 || tp <= 0) {
+    showError("sltpResult", "The calculated stop loss or take profit is not a valid positive price.");
+    lastSLTPText = "";
+    return;
+  }
+
+  const slText = fmt(sl, dp);
+  const tpText = fmt(tp, dp);
+  lastSLTPText = selectedMarket + " " + direction.toUpperCase() +
+    "\nEntry: " + fmt(entry, dp) +
+    "\nStop Loss: " + slText +
+    "\nTake Profit: " + tpText +
+    "\nRisk/Reward: 1:" + fmt(rr, 2);
+
+  showResult("sltpResult", "Calculated trade levels",
+    direction.toUpperCase() + " · " + selectedMarket,
+    "Illustrative levels based on your chosen stop distance.",
+    [
+      { label: "Entry Price", value: fmt(entry, dp) },
+      { label: "Stop Loss", value: slText, className: "negative" },
+      { label: "Take Profit", value: tpText, className: "positive" },
+      { label: "Stop Distance", value: fmt(distance, dp) },
+      { label: "Target Distance", value: fmt(distance * rr, dp) },
+      { label: "Risk / Reward", value: "1 : " + fmt(rr, 2) }
+    ],
+    "Confirm the levels against the instrument's tick size and your trading platform before placing an order.");
+}
+
+async function copyLevels() {
+  if (!lastSLTPText) {
+    calculateSLTP();
+  }
+  if (!lastSLTPText) return;
+
+  try {
+    await navigator.clipboard.writeText(lastSLTPText);
+    $("copySLTPBtn").textContent = "Copied ✓";
+    setTimeout(() => { $("copySLTPBtn").textContent = "Copy Levels"; }, 1600);
+  } catch (error) {
+    // Fallback for browsers where Clipboard API is unavailable.
+    const area = document.createElement("textarea");
+    area.value = lastSLTPText;
+    area.style.position = "fixed";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.select();
+    try {
+      const success = document.execCommand("copy");
+      $("copySLTPBtn").textContent = success ? "Copied ✓" : "Select & Copy";
+    } catch (e) {
+      $("copySLTPBtn").textContent = "Copy unavailable";
     }
+    area.remove();
+    setTimeout(() => { $("copySLTPBtn").textContent = "Copy Levels"; }, 1800);
+  }
+}
 
-    function validPositive(...values) {
-      return values.every(v => Number.isFinite(v) && v > 0);
-    }
+function resetInputs() {
+  if (!confirm("Reset calculator inputs to the default XAUUSD example?")) return;
 
-    function fmt(value, maxDigits = 4) {
-      if (!Number.isFinite(value)) return "—";
-      return value.toLocaleString("en-US", {
-        maximumFractionDigits: maxDigits
-      });
-    }
+  $("psBalance").value = 1000;
+  $("psRisk").value = 1;
+  $("rrRiskMoney").value = 10;
+  $("rrDirection").value = "buy";
+  $("slDirection").value = "buy";
+  $("pipLots").value = 0.10;
+  $("pipCount").value = 100;
+  $("pipMove").value = "";
+  $("slRR").value = "2";
+  $("slDecimals").value = "2";
 
-    function money(value) {
-      if (!Number.isFinite(value)) return "—";
-      return value.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
-    }
+  setMarket("XAUUSD");
+  calculatePosition();
+  calculateRR();
+  calculatePip();
+  calculateSLTP();
+  switchTab("position");
+}
 
-    function show(id, value) {
-      $(id).textContent = value;
-    }
+document.querySelectorAll(".tab").forEach(button => {
+  button.addEventListener("click", () => switchTab(button.dataset.tab));
+});
 
-    function error(id, message) {
-      show(id, message);
-    }
-
-    // Calculator tabs
-    document.querySelectorAll(".tab").forEach(button => {
-      button.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach(tab => {
-          tab.classList.remove("active");
-          tab.setAttribute("aria-selected", "false");
-        });
-        button.classList.add("active");
-        button.setAttribute("aria-selected", "true");
-
-        document.querySelectorAll(".calc-content").forEach(panel => {
-          panel.classList.add("hidden");
-        });
-        $("panel-" + button.dataset.tab).classList.remove("hidden");
-      });
-    });
-
-    // Instrument presets are examples only; brokers can differ.
-    const presets = {
-      XAUUSD: { tickSize: 0.01, tickValue: 1, pipSize: 0.01, pipValue: 1 },
-      XAGUSD: { tickSize: 0.001, tickValue: 1, pipSize: 0.001, pipValue: 1 },
-      FOREX:  { tickSize: 0.0001, tickValue: 1, pipSize: 0.0001, pipValue: 10 },
-      OIL:    { tickSize: 0.01, tickValue: 1, pipSize: 0.01, pipValue: 1 }
-    };
-
-    $("instrument").addEventListener("change", () => {
-      const p = presets[$("instrument").value];
-      $("tickSize").value = p.tickSize;
-      $("tickValue").value = p.tickValue;
-      $("pipSize").value = p.pipSize;
-      $("pipValue").value = p.pipValue;
-    });
-
-    function calculatePosition() {
-      const balance = num("balance");
-      const riskPercent = num("riskPercent");
-      const entry = num("entry");
-      const stop = num("stop");
-      const tickSize = num("tickSize");
-      const tickValue = num("tickValue");
-      const lotStep = num("lotStep");
-      const minLot = num("minLot");
-
-      if (!validPositive(balance, riskPercent, entry, stop, tickSize, tickValue, lotStep) ||
-          riskPercent > 100 || minLot < 0 || entry === stop) {
-        error("posLot", "Check inputs");
-        ["posRisk", "posDistance", "posLoss", "posUsed"].forEach(id => show(id, "—"));
-        show("posNote", "Enter valid positive values, and make sure entry and stop-loss differ.");
-        return;
-      }
-
-      const riskBudget = balance * riskPercent / 100;
-      const distance = Math.abs(entry - stop);
-      const lossPerLot = (distance / tickSize) * tickValue;
-      const rawLots = riskBudget / lossPerLot;
-      const lots = Math.floor((rawLots + 1e-10) / lotStep) * lotStep;
-      const roundedLots = Number(lots.toFixed(8));
-      const actualLoss = roundedLots * lossPerLot;
-
-      show("posLot", fmt(roundedLots, 4) + " lots");
-      show("posRisk", money(riskBudget));
-      show("posDistance", fmt(distance, 8));
-      show("posLoss", money(actualLoss));
-      show("posUsed", fmt(actualLoss / balance * 100, 3) + "%");
-
-      if (roundedLots < minLot) {
-        show("posNote", "The risk-based size is below your minimum lot. Do not automatically increase it; doing so may exceed your risk budget.");
-      } else {
-        show("posNote", "Estimated loss excludes commissions, spread, slippage and gaps. Confirm tick size, tick value, lot step and contract size with your broker.");
-      }
-    }
-
-    function calculateRR() {
-      const entry = num("rrEntry");
-      const stop = num("rrStop");
-      const target = num("rrTarget");
-      const direction = $("rrDirection").value;
-      const riskMoneyRaw = $("rrRiskMoney").value.trim();
-      const riskMoney = riskMoneyRaw === "" ? null : Number(riskMoneyRaw);
-
-      if (!validPositive(entry, stop, target) || entry === stop ||
-          (riskMoney !== null && (!Number.isFinite(riskMoney) || riskMoney < 0))) {
-        error("rrRatio", "Check inputs");
-        ["rrRiskDist", "rrRewardDist", "rrRewardMoney", "rrCheck"].forEach(id => show(id, "—"));
-        return;
-      }
-
-      const riskDist = Math.abs(entry - stop);
-      const rewardDist = Math.abs(target - entry);
-      const ratio = rewardDist / riskDist;
-      const validDirection = direction === "buy"
-        ? (stop < entry && target > entry)
-        : (stop > entry && target < entry);
-
-      show("rrRatio", "1 : " + fmt(ratio, 3));
-      show("rrRiskDist", fmt(riskDist, 8));
-      show("rrRewardDist", fmt(rewardDist, 8));
-      show("rrRewardMoney", riskMoney === null ? "Enter risk amount" : money(riskMoney * ratio));
-      show("rrCheck", validDirection ? "Levels match direction" : "Check trade direction");
-      $("rrCheck").className = validDirection ? "positive" : "negative";
-    }
-
-    function calculatePip() {
-      const lot = num("pipLot");
-      const count = num("pipCount");
-      const pipSize = num("pipSize");
-      const pipValue = num("pipValue");
-      const moveRaw = $("pipMove").value.trim();
-      const move = moveRaw === "" ? null : Number(moveRaw);
-
-      if (!validPositive(lot, pipSize, pipValue) || !Number.isFinite(count) || count < 0 ||
-          (move !== null && (!Number.isFinite(move) || move < 0))) {
-        error("pipResult", "Check inputs");
-        ["pipOne", "pipTotal", "pipMovement"].forEach(id => show(id, "—"));
-        return;
-      }
-
-      show("pipResult", money(lot * pipValue * count));
-      show("pipOne", money(lot * pipValue));
-      show("pipTotal", fmt(count, 6));
-      show("pipMovement", move === null ? "Not entered" : fmt(move / pipSize, 4) + " pips / ticks");
-    }
-
-    function calculateSLTP() {
-      const entry = num("planEntry");
-      const stopDistance = num("planStopDistance");
-      const rr = num("planRR");
-      const direction = $("planDirection").value;
-
-      if (!validPositive(entry, stopDistance, rr)) {
-        error("planSL", "Check inputs");
-        ["planEntryOut", "planSLOut", "planTP", "planStopOut", "planTargetOut"].forEach(id => show(id, "—"));
-        return;
-      }
-
-      const sign = direction === "buy" ? 1 : -1;
-      const sl = entry - sign * stopDistance;
-      const tpDistance = stopDistance * rr;
-      const tp = entry + sign * tpDistance;
-
-      show("planSL", fmt(sl, 8));
-      show("planEntryOut", fmt(entry, 8));
-      show("planSLOut", fmt(sl, 8));
-      show("planTP", fmt(tp, 8));
-      show("planStopOut", fmt(stopDistance, 8));
-      show("planTargetOut", fmt(tpDistance, 8));
-    }
-
-    $("calcPosition").addEventListener("click", calculatePosition);
-    $("calcRR").addEventListener("click", calculateRR);
-    $("calcPip").addEventListener("click", calculatePip);
-    $("calcSLTP").addEventListener("click", calculateSLTP);
-
-    $("copyLevels").addEventListener("click", async () => {
-      const text = [
-        "ForexGoldTools — Trade Levels",
-        "Instrument: " + $("instrument").value,
-        "Entry: " + $("planEntryOut").textContent,
-        "Stop Loss: " + $("planSLOut").textContent,
-        "Take Profit: " + $("planTP").textContent,
-        "Stop Distance: " + $("planStopOut").textContent,
-        "Target Distance: " + $("planTargetOut").textContent
-      ].join("\n");
-
-      try {
-        await navigator.clipboard.writeText(text);
-        show("copyMessage", "Levels copied.");
-      } catch {
-        const area = document.createElement("textarea");
-        area.value = text;
-        document.body.appendChild(area);
-        area.select();
-        const success = document.execCommand("copy");
-        area.remove();
-        show("copyMessage", success ? "Levels copied." : "Copy unavailable in this browser.");
-      }
-    });
-
-    const defaults = {
-      position: {
-        balance: 10000, riskPercent: 1, entry: 2650, stop: 2645,
-        tickSize: 0.01, tickValue: 1, lotStep: 0.01, minLot: 0.01
-      },
-      rr: {
-        rrEntry: 2650, rrStop: 2645, rrTarget: 2660,
-        rrDirection: "buy", rrRiskMoney: ""
-      },
-      pip: {
-        pipLot: 0.1, pipCount: 10, pipSize: 0.01, pipValue: 1, pipMove: ""
-      },
-      sltp: {
-        planEntry: 2650, planDirection: "buy", planStopDistance: 5, planRR: 2
-      }
-    };
-
-    document.querySelectorAll("[data-reset]").forEach(button => {
-      button.addEventListener("click", () => {
-        const key = button.dataset.reset;
-        Object.entries(defaults[key]).forEach(([id, value]) => {
-          $(id).value = value;
-        });
-
-        if (key === "position") calculatePosition();
-        if (key === "rr") calculateRR();
-        if (key === "pip") calculatePip();
-        if (key === "sltp") calculateSLTP();
-      });
-    });
-
-    $("year").textContent = new Date().getFullYear();
-
-    // Display working example results on initial page load.
+document.querySelectorAll(".market-card").forEach(button => {
+  button.addEventListener("click", () => {
+    setMarket(button.dataset.market);
     calculatePosition();
     calculateRR();
     calculatePip();
     calculateSLTP();
-  </script>
+  });
+});
+
+$("calcPositionBtn").addEventListener("click", calculatePosition);
+$("calcRRBtn").addEventListener("click", calculateRR);
+$("calcPipBtn").addEventListener("click", calculatePip);
+$("calcSLTPBtn").addEventListener("click", calculateSLTP);
+$("copySLTPBtn").addEventListener("click", copyLevels);
+$("resetAll").addEventListener("click", resetInputs);
+
+["psBalance", "psRisk", "psEntry", "psStop"].forEach(id => {
+  $(id).addEventListener("input", updateSnapshot);
+});
+
+$("year").textContent = new Date().getFullYear();
+
+setMarket("XAUUSD");
+calculatePosition();
+calculateRR();
+calculatePip();
+calculateSLTP();
+switchTab("position");
+</script>
 </body>
 </html>
